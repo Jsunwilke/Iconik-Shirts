@@ -11,25 +11,29 @@ export default function ProductCard({
   isSelected,
   selectedInfo,
   showAddButton = true,
-  inventory
+  inventory,
+  inventoryLoading = false
 }) {
   const [selectedColor, setSelectedColor] = useState(
     selectedInfo?.color || product.colors[0]
   )
   const [selectedSize, setSelectedSize] = useState(selectedInfo?.size || '')
-  const [availableSizes, setAvailableSizes] = useState(SIZES)
+  const [availableSizes, setAvailableSizes] = useState([]) // Start empty, not all sizes
 
   // Update available sizes when color changes or inventory loads
   useEffect(() => {
     if (inventory && selectedColor) {
       const sizes = getAvailableSizes(inventory, selectedColor.colorName)
-      setAvailableSizes(sizes.length > 0 ? sizes : [])
+      setAvailableSizes(sizes)
       // Reset size if current selection is no longer available
       if (selectedSize && !sizes.includes(selectedSize)) {
         setSelectedSize('')
       }
+    } else if (!inventory && !inventoryLoading) {
+      // No inventory data and not loading - keep empty (out of stock)
+      setAvailableSizes([])
     }
-  }, [inventory, selectedColor, selectedSize])
+  }, [inventory, selectedColor, selectedSize, inventoryLoading])
 
   const getProductImage = (color) => {
     if (color.productImage) {
@@ -112,7 +116,9 @@ export default function ProductCard({
           <p className="text-xs text-gray-500 mb-2">
             Size {inventory && <span className="text-green-600">(In Stock at IL Warehouse)</span>}
           </p>
-          {availableSizes.length > 0 ? (
+          {inventoryLoading ? (
+            <p className="text-sm text-gray-500">Checking inventory...</p>
+          ) : availableSizes.length > 0 ? (
             <div className="flex flex-wrap gap-2">
               {availableSizes.map((size) => (
                 <button
@@ -139,18 +145,20 @@ export default function ProductCard({
         {showAddButton && (
           <button
             onClick={handleAdd}
-            disabled={isSelected || availableSizes.length === 0}
+            disabled={isSelected || inventoryLoading || availableSizes.length === 0}
             className={`
               w-full py-3 rounded-lg font-medium transition-colors
               ${isSelected
                 ? 'bg-green-100 text-green-700 cursor-default'
-                : availableSizes.length === 0
+                : inventoryLoading
                   ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                  : 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800'
+                  : availableSizes.length === 0
+                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                    : 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800'
               }
             `}
           >
-            {isSelected ? '✓ Added' : availableSizes.length === 0 ? 'Out of Stock' : 'Add to Order'}
+            {isSelected ? '✓ Added' : inventoryLoading ? 'Loading...' : availableSizes.length === 0 ? 'Out of Stock' : 'Add to Order'}
           </button>
         )}
       </div>

@@ -6,20 +6,25 @@ export default function TShirtSelector({ selections, onUpdate, onNext, onBack })
   const [products, setProducts] = useState([])
   const [inventoryData, setInventoryData] = useState({})
   const [loading, setLoading] = useState(true)
+  const [inventoryLoading, setInventoryLoading] = useState(true)
 
   useEffect(() => {
     async function loadProducts() {
       try {
-        // Load product data
+        // Load product data first
         const [nl3600, nl6240] = await Promise.all([
           fetch('/data/nextlevel-3600.json').then(r => r.json()),
           fetch('/data/nextlevel-6240.json').then(r => r.json())
         ])
 
+        // Show products immediately with loading state
+        setProducts([nl3600, nl6240])
+        setLoading(false)
+
         // Fetch live inventory from IL warehouse
         const [inv3600, inv6240] = await Promise.all([
-          fetchInventory(nl3600.styleName),
-          fetchInventory(nl6240.styleName)
+          fetchInventory(nl3600.styleCode),
+          fetchInventory(nl6240.styleCode)
         ])
 
         // Store inventory data for size filtering
@@ -31,7 +36,10 @@ export default function TShirtSelector({ selections, onUpdate, onNext, onBack })
         // Filter products to only show in-stock colors
         const filteredProducts = [nl3600, nl6240].map(product => {
           const inventory = product.styleId === nl3600.styleId ? inv3600 : inv6240
-          if (!inventory) return product // Fallback if API fails
+          // If no inventory, return product with EMPTY colors (not all colors)
+          if (!inventory) {
+            return { ...product, colors: [] }
+          }
 
           return {
             ...product,
@@ -40,10 +48,11 @@ export default function TShirtSelector({ selections, onUpdate, onNext, onBack })
         })
 
         setProducts(filteredProducts)
+        setInventoryLoading(false)
       } catch (err) {
         console.error('Failed to load products:', err)
-      } finally {
         setLoading(false)
+        setInventoryLoading(false)
       }
     }
     loadProducts()
@@ -134,6 +143,7 @@ export default function TShirtSelector({ selections, onUpdate, onNext, onBack })
               onSelect={handleSelect}
               isSelected={false}
               inventory={inventoryData[product.styleId]}
+              inventoryLoading={inventoryLoading}
             />
           ))}
         </div>

@@ -7,20 +7,25 @@ export default function OuterwearSelector({ selection, onUpdate, onNext, onBack 
   const [inventoryData, setInventoryData] = useState({ crewneck: null, hoodie: null })
   const [activeType, setActiveType] = useState('crewneck')
   const [loading, setLoading] = useState(true)
+  const [inventoryLoading, setInventoryLoading] = useState(true)
 
   useEffect(() => {
     async function loadProducts() {
       try {
-        // Load product data
+        // Load product data first
         const [crewneck, hoodie] = await Promise.all([
           fetch('/data/gildan-18000.json').then(r => r.json()),
           fetch('/data/gildan-18500.json').then(r => r.json())
         ])
 
+        // Show products immediately with loading state
+        setProducts({ crewneck, hoodie })
+        setLoading(false)
+
         // Fetch live inventory from IL warehouse
         const [invCrewneck, invHoodie] = await Promise.all([
-          fetchInventory(crewneck.styleName),
-          fetchInventory(hoodie.styleName)
+          fetchInventory(crewneck.styleCode),
+          fetchInventory(hoodie.styleCode)
         ])
 
         // Store inventory data for size filtering
@@ -30,21 +35,23 @@ export default function OuterwearSelector({ selection, onUpdate, onNext, onBack 
         })
 
         // Filter products to only show in-stock colors
+        // If no inventory, return product with EMPTY colors (not all colors)
         const filteredCrewneck = invCrewneck ? {
           ...crewneck,
           colors: filterInStockColors(crewneck, invCrewneck)
-        } : crewneck
+        } : { ...crewneck, colors: [] }
 
         const filteredHoodie = invHoodie ? {
           ...hoodie,
           colors: filterInStockColors(hoodie, invHoodie)
-        } : hoodie
+        } : { ...hoodie, colors: [] }
 
         setProducts({ crewneck: filteredCrewneck, hoodie: filteredHoodie })
+        setInventoryLoading(false)
       } catch (err) {
         console.error('Failed to load products:', err)
-      } finally {
         setLoading(false)
+        setInventoryLoading(false)
       }
     }
     loadProducts()
@@ -155,6 +162,7 @@ export default function OuterwearSelector({ selection, onUpdate, onNext, onBack 
               onSelect={handleSelect}
               isSelected={selection?.type === activeType}
               inventory={inventoryData[activeType]}
+              inventoryLoading={inventoryLoading}
             />
           )}
         </div>

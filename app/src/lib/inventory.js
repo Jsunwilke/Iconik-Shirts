@@ -34,11 +34,19 @@ export async function fetchInventory(styleName) {
   }
 }
 
+// Helper to normalize color names for comparison (case-insensitive)
+function normalizeColorName(name) {
+  return name?.toLowerCase().trim() || '';
+}
+
 // Helper to check if a specific color/size combo is in stock
 export function isInStock(inventory, colorName, sizeName) {
   if (!inventory?.availableColors) return false;
 
-  const color = inventory.availableColors.find(c => c.colorName === colorName);
+  const normalizedColorName = normalizeColorName(colorName);
+  const color = inventory.availableColors.find(c =>
+    normalizeColorName(c.colorName) === normalizedColorName
+  );
   if (!color) return false;
 
   const size = color.sizes.find(s => s.size === sizeName);
@@ -49,7 +57,10 @@ export function isInStock(inventory, colorName, sizeName) {
 export function getAvailableSizes(inventory, colorName) {
   if (!inventory?.availableColors) return [];
 
-  const color = inventory.availableColors.find(c => c.colorName === colorName);
+  const normalizedColorName = normalizeColorName(colorName);
+  const color = inventory.availableColors.find(c =>
+    normalizeColorName(c.colorName) === normalizedColorName
+  );
   if (!color) return [];
 
   return color.sizes.map(s => s.size);
@@ -57,9 +68,15 @@ export function getAvailableSizes(inventory, colorName) {
 
 // Helper to filter product colors to only in-stock ones
 export function filterInStockColors(product, inventory) {
-  if (!inventory?.availableColors) return product.colors;
+  // If no inventory data, return empty array (not all colors!)
+  if (!inventory?.availableColors) return [];
 
-  const inStockColorNames = new Set(inventory.availableColors.map(c => c.colorName));
+  // Build a set of normalized in-stock color names for efficient lookup
+  const inStockColorNames = new Set(
+    inventory.availableColors.map(c => normalizeColorName(c.colorName))
+  );
 
-  return product.colors.filter(color => inStockColorNames.has(color.colorName));
+  return product.colors.filter(color =>
+    inStockColorNames.has(normalizeColorName(color.colorName))
+  );
 }
