@@ -1,18 +1,45 @@
 import { useState, useEffect } from 'react'
 import ProductCard from './ProductCard'
+import { fetchInventory, filterInStockColors } from '../lib/inventory'
 
 export default function TShirtSelector({ selections, onUpdate, onNext, onBack }) {
   const [products, setProducts] = useState([])
+  const [inventoryData, setInventoryData] = useState({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function loadProducts() {
       try {
+        // Load product data
         const [nl3600, nl6240] = await Promise.all([
           fetch('/data/nextlevel-3600.json').then(r => r.json()),
           fetch('/data/nextlevel-6240.json').then(r => r.json())
         ])
-        setProducts([nl3600, nl6240])
+
+        // Fetch live inventory from IL warehouse
+        const [inv3600, inv6240] = await Promise.all([
+          fetchInventory(nl3600.styleName),
+          fetchInventory(nl6240.styleName)
+        ])
+
+        // Store inventory data for size filtering
+        setInventoryData({
+          [nl3600.styleId]: inv3600,
+          [nl6240.styleId]: inv6240
+        })
+
+        // Filter products to only show in-stock colors
+        const filteredProducts = [nl3600, nl6240].map(product => {
+          const inventory = product.styleId === nl3600.styleId ? inv3600 : inv6240
+          if (!inventory) return product // Fallback if API fails
+
+          return {
+            ...product,
+            colors: filterInStockColors(product, inventory)
+          }
+        })
+
+        setProducts(filteredProducts)
       } catch (err) {
         console.error('Failed to load products:', err)
       } finally {
@@ -106,6 +133,7 @@ export default function TShirtSelector({ selections, onUpdate, onNext, onBack })
               imageBasePath={`/images/tshirts/${product.styleId}`}
               onSelect={handleSelect}
               isSelected={false}
+              inventory={inventoryData[product.styleId]}
             />
           ))}
         </div>

@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ColorSwatch from './ColorSwatch'
+import { getAvailableSizes } from '../lib/inventory'
 
 const SIZES = ['S', 'M', 'L', 'XL', '2XL', '3XL']
 
@@ -9,12 +10,26 @@ export default function ProductCard({
   onSelect,
   isSelected,
   selectedInfo,
-  showAddButton = true
+  showAddButton = true,
+  inventory
 }) {
   const [selectedColor, setSelectedColor] = useState(
     selectedInfo?.color || product.colors[0]
   )
   const [selectedSize, setSelectedSize] = useState(selectedInfo?.size || '')
+  const [availableSizes, setAvailableSizes] = useState(SIZES)
+
+  // Update available sizes when color changes or inventory loads
+  useEffect(() => {
+    if (inventory && selectedColor) {
+      const sizes = getAvailableSizes(inventory, selectedColor.colorName)
+      setAvailableSizes(sizes.length > 0 ? sizes : [])
+      // Reset size if current selection is no longer available
+      if (selectedSize && !sizes.includes(selectedSize)) {
+        setSelectedSize('')
+      }
+    }
+  }, [inventory, selectedColor, selectedSize])
 
   const getProductImage = (color) => {
     if (color.productImage) {
@@ -94,40 +109,48 @@ export default function ProductCard({
 
         {/* Size Selector */}
         <div className="mb-4">
-          <p className="text-xs text-gray-500 mb-2">Size</p>
-          <div className="flex flex-wrap gap-2">
-            {SIZES.map((size) => (
-              <button
-                key={size}
-                onClick={() => setSelectedSize(size)}
-                className={`
-                  px-3 py-2 text-sm font-medium rounded-md border transition-colors
-                  ${selectedSize === size
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
-                  }
-                `}
-              >
-                {size}
-              </button>
-            ))}
-          </div>
+          <p className="text-xs text-gray-500 mb-2">
+            Size {inventory && <span className="text-green-600">(In Stock at IL Warehouse)</span>}
+          </p>
+          {availableSizes.length > 0 ? (
+            <div className="flex flex-wrap gap-2">
+              {availableSizes.map((size) => (
+                <button
+                  key={size}
+                  onClick={() => setSelectedSize(size)}
+                  className={`
+                    px-3 py-2 text-sm font-medium rounded-md border transition-colors
+                    ${selectedSize === size
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
+                    }
+                  `}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-red-600">No sizes available for this color</p>
+          )}
         </div>
 
         {/* Add Button */}
         {showAddButton && (
           <button
             onClick={handleAdd}
-            disabled={isSelected}
+            disabled={isSelected || availableSizes.length === 0}
             className={`
               w-full py-3 rounded-lg font-medium transition-colors
               ${isSelected
                 ? 'bg-green-100 text-green-700 cursor-default'
-                : 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800'
+                : availableSizes.length === 0
+                  ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                  : 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800'
               }
             `}
           >
-            {isSelected ? '✓ Added' : 'Add to Order'}
+            {isSelected ? '✓ Added' : availableSizes.length === 0 ? 'Out of Stock' : 'Add to Order'}
           </button>
         )}
       </div>

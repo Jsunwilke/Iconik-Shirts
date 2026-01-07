@@ -1,19 +1,46 @@
 import { useState, useEffect } from 'react'
 import ProductCard from './ProductCard'
+import { fetchInventory, filterInStockColors } from '../lib/inventory'
 
 export default function OuterwearSelector({ selection, onUpdate, onNext, onBack }) {
   const [products, setProducts] = useState({ crewneck: null, hoodie: null })
+  const [inventoryData, setInventoryData] = useState({ crewneck: null, hoodie: null })
   const [activeType, setActiveType] = useState('crewneck')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function loadProducts() {
       try {
+        // Load product data
         const [crewneck, hoodie] = await Promise.all([
           fetch('/data/gildan-18000.json').then(r => r.json()),
           fetch('/data/gildan-18500.json').then(r => r.json())
         ])
-        setProducts({ crewneck, hoodie })
+
+        // Fetch live inventory from IL warehouse
+        const [invCrewneck, invHoodie] = await Promise.all([
+          fetchInventory(crewneck.styleName),
+          fetchInventory(hoodie.styleName)
+        ])
+
+        // Store inventory data for size filtering
+        setInventoryData({
+          crewneck: invCrewneck,
+          hoodie: invHoodie
+        })
+
+        // Filter products to only show in-stock colors
+        const filteredCrewneck = invCrewneck ? {
+          ...crewneck,
+          colors: filterInStockColors(crewneck, invCrewneck)
+        } : crewneck
+
+        const filteredHoodie = invHoodie ? {
+          ...hoodie,
+          colors: filterInStockColors(hoodie, invHoodie)
+        } : hoodie
+
+        setProducts({ crewneck: filteredCrewneck, hoodie: filteredHoodie })
       } catch (err) {
         console.error('Failed to load products:', err)
       } finally {
@@ -127,6 +154,7 @@ export default function OuterwearSelector({ selection, onUpdate, onNext, onBack 
               imageBasePath={imagePath}
               onSelect={handleSelect}
               isSelected={selection?.type === activeType}
+              inventory={inventoryData[activeType]}
             />
           )}
         </div>
