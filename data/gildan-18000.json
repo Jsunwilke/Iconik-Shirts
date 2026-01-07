@@ -1,0 +1,296 @@
+{
+  "styleId": "gildan-18000",
+  "styleName": "Gildan 18000",
+  "brandName": "Gildan",
+  "productType": "crewneck",
+  "title": "Heavy Blend Crewneck Sweatshirt",
+  "colors": [
+    {
+      "colorName": "Antique Cherry Red",
+      "colorCode": "03",
+      "hexColor": "#971B2F",
+      "productImage": "product/antique-cherry-red.jpg",
+      "swatchImage": "swatches/antique-cherry-red.jpg"
+    },
+    {
+      "colorName": "Ash",
+      "colorCode": "02",
+      "hexColor": "#C8C9C7",
+      "productImage": "product/ash.jpg",
+      "swatchImage": "swatches/ash.jpg"
+    },
+    {
+      "colorName": "Black",
+      "colorCode": "50",
+      "hexColor": "#25282A",
+      "productImage": "product/black.jpg",
+      "swatchImage": "swatches/black.jpg"
+    },
+    {
+      "colorName": "Cardinal Red",
+      "colorCode": "52",
+      "hexColor": "#8A1538",
+      "productImage": "product/cardinal-red.jpg",
+      "swatchImage": "swatches/cardinal-red.jpg"
+    },
+    {
+      "colorName": "Carolina Blue",
+      "colorCode": "26",
+      "hexColor": "#7ba4db",
+      "productImage": "product/carolina-blue.jpg",
+      "swatchImage": "swatches/carolina-blue.jpg"
+    },
+    {
+      "colorName": "Charcoal",
+      "colorCode": "09",
+      "hexColor": "#66676C",
+      "productImage": "product/charcoal.jpg",
+      "swatchImage": "swatches/charcoal.jpg"
+    },
+    {
+      "colorName": "Cherry Red",
+      "colorCode": "22",
+      "hexColor": "#AC2B37",
+      "productImage": "product/cherry-red.jpg",
+      "swatchImage": "swatches/cherry-red.jpg"
+    },
+    {
+      "colorName": "Dark Chocolate",
+      "colorCode": "05",
+      "hexColor": "#382F2D",
+      "productImage": "product/dark-chocolate.jpg",
+      "swatchImage": "swatches/dark-chocolate.jpg"
+    },
+    {
+      "colorName": "Dark Heather",
+      "colorCode": "07",
+      "hexColor": "#425563",
+      "productImage": "product/dark-heather.jpg",
+      "swatchImage": "swatches/dark-heather.jpg"
+    },
+    {
+      "colorName": "Fan Charcoal Heather",
+      "colorCode": "86",
+      "hexColor": "#646667",
+      "productImage": null,
+      "swatchImage": "swatches/fan-charcoal-heather.jpg"
+    },
+    {
+      "colorName": "Fan Dark Green",
+      "colorCode": "82",
+      "hexColor": "#205C40",
+      "productImage": null,
+      "swatchImage": "swatches/fan-dark-green.jpg"
+    },
+    {
+      "colorName": "Fan Deep Royal",
+      "colorCode": "83",
+      "hexColor": "#21366E",
+      "productImage": null,
+      "swatchImage": "swatches/fan-deep-royal.jpg"
+    },
+    {
+      "colorName": "Forest",
+      "colorCode": "54",
+      "hexColor": "#273B33",
+      "productImage": "product/forest.jpg",
+      "swatchImage": "swatches/forest.jpg"
+    },
+    {
+      "colorName": "Garnet",
+      "colorCode": "08",
+      "hexColor": "#7D2935",
+      "productImage": "product/garnet.jpg",
+      "swatchImage": "swatches/garnet.jpg"
+    },
+    {
+      "colorName": "Gold",
+      "colorCode": "12",
+      "hexColor": "#FFA300",
+      "productImage": "product/gold.jpg",
+      "swatchImage": "swatches/gold.jpg"
+    },
+    {
+      "colorName": "Graphite Heather",
+      "colorCode": "49",
+      "hexColor": "#707372",
+      "productImage": "product/graphite-heather.jpg",
+      "swatchImage": "swatches/graphite-heather.jpg"
+    },
+    {
+      "colorName": "Heather Dark Green",
+      "colorCode": "21",
+      "hexColor": "#43695B",
+      "productImage": "product/heather-dark-green.jpg",
+      "swatchImage": "swatches/heather-dark-green.jpg"
+    },
+    {
+      "colorName": "Heather Dark Maroon",
+      "colorCode": "59",
+      "hexColor": "#651D32",
+      "productImage": "product/heather-dark-maroon.jpg",
+      "swatchImage": "swatches/heather-dark-maroon.jpg"
+    },
+    {
+      "colorName": "Heather Dark Navy",
+      "colorCode": "81",
+      "hexColor": "#595478",
+      "productImage": "product/heather-dark-navy.jpg",
+      "swatchImage": "swatches/heather-dark-navy.jpg"
+    },
+    {
+      "colorName": "Heather Deep Royal",
+      "colorCode": "74",
+      "hexColor": "#1D4F91",
+      "productImage": "product/heather-deep-royal.jpg",
+      "swatchImage": "swatches/heather-deep-royal.jpg"
+    },
+    {
+      "colorName": "Heather Scarlet Red",
+      "colorCode": "78",
+      "hexColor": "#B83A4B",
+      "productImage": "product/heather-scarlet-red.jpg",
+      "swatchImage": "swatches/heather-scarlet-red.jpg"
+    },
+    {
+      "colorName": "Heliconia",
+      "colorCode": "69",
+      "hexColor": "#DB3E79",
+      "productImage": "product/heliconia.jpg",
+      "swatchImage": "swatches/heliconia.jpg"
+    },
+    {
+      "colorName": "Indigo Blue",
+      "colorCode": "68",
+      "hexColor": "#486D87",
+      "productImage": "product/indigo-blue.jpg",
+      "swatchImage": "swatches/indigo-blue.jpg"
+    },
+    {
+      "colorName": "Irish Green",
+      "colorCode": "20",
+      "hexColor": "#00A74A",
+      "productImage": "product/irish-green.jpg",
+      "swatchImage": "swatches/irish-green.jpg"
+    },
+    {
+      "colorName": "Light Blue",
+      "colorCode": "25",
+      "hexColor": "#A4C8E1",
+      "productImage": "product/light-blue.jpg",
+      "swatchImage": "swatches/light-blue.jpg"
+    },
+    {
+      "colorName": "Light Pink",
+      "colorCode": "31",
+      "hexColor": "#E4C6D4",
+      "productImage": "product/light-pink.jpg",
+      "swatchImage": "swatches/light-pink.jpg"
+    },
+    {
+      "colorName": "Maroon",
+      "colorCode": "53",
+      "hexColor": "#5B2B42",
+      "productImage": "product/maroon.jpg",
+      "swatchImage": "swatches/maroon.jpg"
+    },
+    {
+      "colorName": "Military Green",
+      "colorCode": "06",
+      "hexColor": "#5E7461",
+      "productImage": "product/military-green.jpg",
+      "swatchImage": "swatches/military-green.jpg"
+    },
+    {
+      "colorName": "Navy",
+      "colorCode": "65",
+      "hexColor": "#263147",
+      "productImage": "product/navy.jpg",
+      "swatchImage": "swatches/navy.jpg"
+    },
+    {
+      "colorName": "Neon Blue",
+      "colorCode": "85",
+      "hexColor": "#0C51A3",
+      "productImage": null,
+      "swatchImage": "swatches/neon-blue.jpg"
+    },
+    {
+      "colorName": "Orange",
+      "colorCode": "66",
+      "hexColor": "#F4633A",
+      "productImage": "product/orange.jpg",
+      "swatchImage": "swatches/orange.jpg"
+    },
+    {
+      "colorName": "Purple",
+      "colorCode": "67",
+      "hexColor": "#464E7E",
+      "productImage": "product/purple.jpg",
+      "swatchImage": "swatches/purple.jpg"
+    },
+    {
+      "colorName": "Red",
+      "colorCode": "70",
+      "hexColor": "#BA0C2F",
+      "productImage": "product/red.jpg",
+      "swatchImage": "swatches/red.jpg"
+    },
+    {
+      "colorName": "Royal",
+      "colorCode": "75",
+      "hexColor": "#224D8F",
+      "productImage": "product/royal.jpg",
+      "swatchImage": "swatches/royal.jpg"
+    },
+    {
+      "colorName": "Safety Green",
+      "colorCode": "16",
+      "hexColor": "#C6D219",
+      "productImage": "product/safety-green.jpg",
+      "swatchImage": "swatches/safety-green.jpg"
+    },
+    {
+      "colorName": "Safety Orange",
+      "colorCode": "33",
+      "hexColor": "#E5801C",
+      "productImage": "product/safety-orange.jpg",
+      "swatchImage": "swatches/safety-orange.jpg"
+    },
+    {
+      "colorName": "Safety Pink",
+      "colorCode": "14",
+      "hexColor": "#E16F8F",
+      "productImage": "product/safety-pink.jpg",
+      "swatchImage": "swatches/safety-pink.jpg"
+    },
+    {
+      "colorName": "Sand",
+      "colorCode": "73",
+      "hexColor": "#CABFAD",
+      "productImage": "product/sand.jpg",
+      "swatchImage": "swatches/sand.jpg"
+    },
+    {
+      "colorName": "Sapphire",
+      "colorCode": "76",
+      "hexColor": "#0077B5",
+      "productImage": "product/sapphire.jpg",
+      "swatchImage": "swatches/sapphire.jpg"
+    },
+    {
+      "colorName": "Sport Grey",
+      "colorCode": "58",
+      "hexColor": "#97999B",
+      "productImage": "product/sport-grey.jpg",
+      "swatchImage": "swatches/sport-grey.jpg"
+    },
+    {
+      "colorName": "White",
+      "colorCode": "00",
+      "hexColor": "#FFFFFF",
+      "productImage": "product/white.jpg",
+      "swatchImage": "swatches/white.jpg"
+    }
+  ]
+}

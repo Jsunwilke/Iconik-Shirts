@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.ssactivewear.com)",
+      "WebSearch",
+      "WebFetch(domain:api.ssactivewear.com)",
+      "Bash(curl:*)",
+      "Bash(powershell:*)",
+      "Bash(node:*)",
+      "Bash(npm create:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(xcopy \"E:\\\\Jason Desktop\\\\Iconik Software\\\\Web apps\\\\Iconik-Shirts\\\\data\" \"E:\\\\Jason Desktop\\\\Iconik Software\\\\Web apps\\\\Iconik-Shirts\\\\app\\\\public\\\\data\"\" /E /I /Y && xcopy \"E:Jason DesktopIconik SoftwareWeb appsIconik-Shirtsimages\" \"E:Jason DesktopIconik SoftwareWeb appsIconik-Shirtsapppublicimages\"\" /E /I /Y)",
+      "Bash(robocopy:*)",
+      "Bash(del \"E:\\\\Jason Desktop\\\\Iconik Software\\\\Web apps\\\\Iconik-Shirts\\\\app\\\\src\\\\App.css\")",
+      "Bash(npm run dev:*)",
+      "Bash(npm uninstall:*)"
+    ]
+  }
+}

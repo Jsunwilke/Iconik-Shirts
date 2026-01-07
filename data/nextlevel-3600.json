@@ -1,0 +1,324 @@
+{
+  "styleId": "nextlevel-3600",
+  "styleName": "Next Level 3600",
+  "brandName": "Next Level",
+  "productType": "tshirt",
+  "title": "Unisex Cotton T-Shirt",
+  "colors": [
+    {
+      "colorName": "Antique Gold",
+      "colorCode": "28",
+      "hexColor": "#CE973D",
+      "productImage": "product/antique-gold.jpg",
+      "swatchImage": "swatches/antique-gold.jpg"
+    },
+    {
+      "colorName": "Banana Cream",
+      "colorCode": "40",
+      "hexColor": "#f8e08e",
+      "productImage": "product/banana-cream.jpg",
+      "swatchImage": "swatches/banana-cream.jpg"
+    },
+    {
+      "colorName": "Black",
+      "colorCode": "50",
+      "hexColor": "#25282a",
+      "productImage": "product/black.jpg",
+      "swatchImage": "swatches/black.jpg"
+    },
+    {
+      "colorName": "Blue Jean",
+      "colorCode": "22",
+      "hexColor": "#437083",
+      "productImage": "product/blue-jean.jpg",
+      "swatchImage": "swatches/blue-jean.jpg"
+    },
+    {
+      "colorName": "Bone",
+      "colorCode": "20",
+      "hexColor": "#EEEADF",
+      "productImage": "product/bone.jpg",
+      "swatchImage": "swatches/bone.jpg"
+    },
+    {
+      "colorName": "Cardinal",
+      "colorCode": "52",
+      "hexColor": "#862633",
+      "productImage": "product/cardinal.jpg",
+      "swatchImage": "swatches/cardinal.jpg"
+    },
+    {
+      "colorName": "Classic Orange",
+      "colorCode": "66",
+      "hexColor": "#FA4616",
+      "productImage": "product/classic-orange.jpg",
+      "swatchImage": "swatches/classic-orange.jpg"
+    },
+    {
+      "colorName": "Clay",
+      "colorCode": "33",
+      "hexColor": "#99552b",
+      "productImage": "product/clay.jpg",
+      "swatchImage": "swatches/clay.jpg"
+    },
+    {
+      "colorName": "Cool Blue",
+      "colorCode": "26",
+      "hexColor": "#004976",
+      "productImage": "product/cool-blue.jpg",
+      "swatchImage": "swatches/cool-blue.jpg"
+    },
+    {
+      "colorName": "Cream",
+      "colorCode": "24",
+      "hexColor": "#e2d9c2",
+      "productImage": "product/cream.jpg",
+      "swatchImage": "swatches/cream.jpg"
+    },
+    {
+      "colorName": "Dark Chocolate",
+      "colorCode": "05",
+      "hexColor": "#382f2d",
+      "productImage": "product/dark-chocolate.jpg",
+      "swatchImage": "swatches/dark-chocolate.jpg"
+    },
+    {
+      "colorName": "Desert Pink",
+      "colorCode": "31",
+      "hexColor": "#D4A299",
+      "productImage": "product/desert-pink.jpg",
+      "swatchImage": "swatches/desert-pink.jpg"
+    },
+    {
+      "colorName": "Forest Green",
+      "colorCode": "54",
+      "hexColor": "#1d3c34",
+      "productImage": "product/forest-green.jpg",
+      "swatchImage": "swatches/forest-green.jpg"
+    },
+    {
+      "colorName": "Gold",
+      "colorCode": "12",
+      "hexColor": "#ffb549",
+      "productImage": "product/gold.jpg",
+      "swatchImage": "swatches/gold.jpg"
+    },
+    {
+      "colorName": "Graphite Black",
+      "colorCode": "57",
+      "hexColor": "#373a36",
+      "productImage": "product/graphite-black.jpg",
+      "swatchImage": "swatches/graphite-black.jpg"
+    },
+    {
+      "colorName": "Heather Grey",
+      "colorCode": "58",
+      "hexColor": "#7b7e79",
+      "productImage": "product/heather-grey.jpg",
+      "swatchImage": "swatches/heather-grey.jpg"
+    },
+    {
+      "colorName": "Heavy Metal",
+      "colorCode": "09",
+      "hexColor": "#373a36",
+      "productImage": "product/heavy-metal.jpg",
+      "swatchImage": "swatches/heavy-metal.jpg"
+    },
+    {
+      "colorName": "Indigo",
+      "colorCode": "68",
+      "hexColor": "#3f5666",
+      "productImage": "product/indigo.jpg",
+      "swatchImage": "swatches/indigo.jpg"
+    },
+    {
+      "colorName": "Kelly Green",
+      "colorCode": "60",
+      "hexColor": "#009a44",
+      "productImage": "product/kelly-green.jpg",
+      "swatchImage": "swatches/kelly-green.jpg"
+    },
+    {
+      "colorName": "Light Blue",
+      "colorCode": "25",
+      "hexColor": "#c6dae7",
+      "productImage": "product/light-blue.jpg",
+      "swatchImage": "swatches/light-blue.jpg"
+    },
+    {
+      "colorName": "Light Grey",
+      "colorCode": "35",
+      "hexColor": "#a7a8aa",
+      "productImage": "product/light-grey.jpg",
+      "swatchImage": "swatches/light-grey.jpg"
+    },
+    {
+      "colorName": "Light Olive",
+      "colorCode": "64",
+      "hexColor": "#888a77",
+      "productImage": "product/light-olive.jpg",
+      "swatchImage": "swatches/light-olive.jpg"
+    },
+    {
+      "colorName": "Light Pink",
+      "colorCode": "30",
+      "hexColor": "#e9a2b2",
+      "productImage": "product/light-pink.jpg",
+      "swatchImage": "swatches/light-pink.jpg"
+    },
+    {
+      "colorName": "Maroon",
+      "colorCode": "53",
+      "hexColor": "#672e45",
+      "productImage": "product/maroon.jpg",
+      "swatchImage": "swatches/maroon.jpg"
+    },
+    {
+      "colorName": "Mauve",
+      "colorCode": "32",
+      "hexColor": "#ad6a63",
+      "productImage": "product/mauve.jpg",
+      "swatchImage": "swatches/mauve.jpg"
+    },
+    {
+      "colorName": "Midnight Navy",
+      "colorCode": "65",
+      "hexColor": "#081f2c",
+      "productImage": "product/midnight-navy.jpg",
+      "swatchImage": "swatches/midnight-navy.jpg"
+    },
+    {
+      "colorName": "Military Green",
+      "colorCode": "06",
+      "hexColor": "#3e4827",
+      "productImage": "product/military-green.jpg",
+      "swatchImage": "swatches/military-green.jpg"
+    },
+    {
+      "colorName": "Natural",
+      "colorCode": "01",
+      "hexColor": "#faedbc",
+      "productImage": "product/natural.jpg",
+      "swatchImage": "swatches/natural.jpg"
+    },
+    {
+      "colorName": "Oatmeal",
+      "colorCode": "23",
+      "hexColor": "#645C59",
+      "productImage": "product/oatmeal.jpg",
+      "swatchImage": "swatches/oatmeal.jpg"
+    },
+    {
+      "colorName": "Oxblood",
+      "colorCode": "55",
+      "hexColor": "#000102",
+      "productImage": "product/oxblood.jpg",
+      "swatchImage": "swatches/oxblood.jpg"
+    },
+    {
+      "colorName": "Peri Blue",
+      "colorCode": "21",
+      "hexColor": "#9AA5AF",
+      "productImage": "product/peri-blue.jpg",
+      "swatchImage": "swatches/peri-blue.jpg"
+    },
+    {
+      "colorName": "Purple Rush",
+      "colorCode": "67",
+      "hexColor": "#582c83",
+      "productImage": "product/purple-rush.jpg",
+      "swatchImage": "swatches/purple-rush.jpg"
+    },
+    {
+      "colorName": "Red",
+      "colorCode": "70",
+      "hexColor": "#d50032",
+      "productImage": "product/red.jpg",
+      "swatchImage": "swatches/red.jpg"
+    },
+    {
+      "colorName": "Royal",
+      "colorCode": "75",
+      "hexColor": "#0057b8",
+      "productImage": "product/royal.jpg",
+      "swatchImage": "swatches/royal.jpg"
+    },
+    {
+      "colorName": "Royal Pine",
+      "colorCode": "51",
+      "hexColor": "#425750",
+      "productImage": "product/royal-pine.jpg",
+      "swatchImage": "swatches/royal-pine.jpg"
+    },
+    {
+      "colorName": "Sand",
+      "colorCode": "73",
+      "hexColor": "#d6d2c4",
+      "productImage": "product/sand.jpg",
+      "swatchImage": "swatches/sand.jpg"
+    },
+    {
+      "colorName": "Shiitake",
+      "colorCode": "02",
+      "hexColor": "#8C8279",
+      "productImage": "product/shiitake.jpg",
+      "swatchImage": "swatches/shiitake.jpg"
+    },
+    {
+      "colorName": "Stonewash Denim",
+      "colorCode": "27",
+      "hexColor": "#A6BBC8",
+      "productImage": "product/stonewash-denim.jpg",
+      "swatchImage": "swatches/stonewash-denim.jpg"
+    },
+    {
+      "colorName": "Tahiti Blue",
+      "colorCode": "97",
+      "hexColor": "#2dccd3",
+      "productImage": "product/tahiti-blue.jpg",
+      "swatchImage": "swatches/tahiti-blue.jpg"
+    },
+    {
+      "colorName": "Tan",
+      "colorCode": "96",
+      "hexColor": "#d6d2c4",
+      "productImage": "product/tan.jpg",
+      "swatchImage": "swatches/tan.jpg"
+    },
+    {
+      "colorName": "Teal",
+      "colorCode": "77",
+      "hexColor": "#0099b2",
+      "productImage": "product/teal.jpg",
+      "swatchImage": "swatches/teal.jpg"
+    },
+    {
+      "colorName": "Turquoise",
+      "colorCode": "76",
+      "hexColor": "#007dba",
+      "productImage": "product/turquoise.jpg",
+      "swatchImage": "swatches/turquoise.jpg"
+    },
+    {
+      "colorName": "Warm Grey",
+      "colorCode": "59",
+      "hexColor": "#8c8778",
+      "productImage": "product/warm-grey.jpg",
+      "swatchImage": "swatches/warm-grey.jpg"
+    },
+    {
+      "colorName": "Watermelon",
+      "colorCode": "99",
+      "hexColor": "#dc4588",
+      "productImage": "product/watermelon.jpg",
+      "swatchImage": "swatches/watermelon.jpg"
+    },
+    {
+      "colorName": "White",
+      "colorCode": "00",
+      "hexColor": "#ffffff",
+      "productImage": "product/white.jpg",
+      "swatchImage": "swatches/white.jpg"
+    }
+  ]
+}

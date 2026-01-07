@@ -1,0 +1,79 @@
+{
+  "styleId": "nextlevel-6240",
+  "styleName": "Next Level 6240",
+  "brandName": "Next Level",
+  "productType": "tshirt",
+  "title": "CVC V-Neck T-Shirt",
+  "colors": [
+    {
+      "colorName": "Banana Cream",
+      "colorCode": "40",
+      "hexColor": "#f8e08e",
+      "productImage": "product/banana-cream.jpg",
+      "swatchImage": "swatches/banana-cream.jpg"
+    },
+    {
+      "colorName": "Black",
+      "colorCode": "50",
+      "hexColor": "#2D2926",
+      "productImage": "product/black.jpg",
+      "swatchImage": "swatches/black.jpg"
+    },
+    {
+      "colorName": "Charcoal",
+      "colorCode": "09",
+      "hexColor": "#373a36",
+      "productImage": "product/charcoal.jpg",
+      "swatchImage": "swatches/charcoal.jpg"
+    },
+    {
+      "colorName": "Dark Heather Grey",
+      "colorCode": "59",
+      "hexColor": "#707372",
+      "productImage": "product/dark-heather-grey.jpg",
+      "swatchImage": "swatches/dark-heather-grey.jpg"
+    },
+    {
+      "colorName": "Midnight Navy",
+      "colorCode": "65",
+      "hexColor": "#081f2c",
+      "productImage": "product/midnight-navy.jpg",
+      "swatchImage": "swatches/midnight-navy.jpg"
+    },
+    {
+      "colorName": "Military Green",
+      "colorCode": "06",
+      "hexColor": "#3e4827",
+      "productImage": "product/military-green.jpg",
+      "swatchImage": "swatches/military-green.jpg"
+    },
+    {
+      "colorName": "Purple Rush",
+      "colorCode": "67",
+      "hexColor": "#582c83",
+      "productImage": "product/purple-rush.jpg",
+      "swatchImage": "swatches/purple-rush.jpg"
+    },
+    {
+      "colorName": "Red",
+      "colorCode": "70",
+      "hexColor": "#d50032",
+      "productImage": "product/red.jpg",
+      "swatchImage": "swatches/red.jpg"
+    },
+    {
+      "colorName": "Turquoise",
+      "colorCode": "76",
+      "hexColor": "#007dba",
+      "productImage": "product/turquoise.jpg",
+      "swatchImage": "swatches/turquoise.jpg"
+    },
+    {
+      "colorName": "White",
+      "colorCode": "00",
+      "hexColor": "#ffffff",
+      "productImage": "product/white.jpg",
+      "swatchImage": "swatches/white.jpg"
+    }
+  ]
+}
