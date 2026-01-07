@@ -3,51 +3,49 @@ import ProductCard from './ProductCard'
 import { fetchInventory, filterInStockColors } from '../lib/inventory'
 
 export default function TShirtSelector({ selections, onUpdate, onNext, onBack }) {
-  const [products, setProducts] = useState([])
-  const [inventoryData, setInventoryData] = useState({})
+  const [products, setProducts] = useState({ regular: null, vneck: null })
+  const [inventoryData, setInventoryData] = useState({ regular: null, vneck: null })
+  const [activeType, setActiveType] = useState('regular')
   const [loading, setLoading] = useState(true)
   const [inventoryLoading, setInventoryLoading] = useState(true)
 
   useEffect(() => {
     async function loadProducts() {
       try {
-        // Load product data first
-        const [nl3600, nl6240] = await Promise.all([
+        // Load product data first (regular = 3600, vneck = 6240)
+        const [regular, vneck] = await Promise.all([
           fetch('/data/nextlevel-3600.json').then(r => r.json()),
           fetch('/data/nextlevel-6240.json').then(r => r.json())
         ])
 
         // Show products immediately with loading state
-        setProducts([nl3600, nl6240])
+        setProducts({ regular, vneck })
         setLoading(false)
 
         // Fetch live inventory from IL warehouse
-        const [inv3600, inv6240] = await Promise.all([
-          fetchInventory(nl3600.styleCode),
-          fetchInventory(nl6240.styleCode)
+        const [invRegular, invVneck] = await Promise.all([
+          fetchInventory(regular.styleCode),
+          fetchInventory(vneck.styleCode)
         ])
 
         // Store inventory data for size filtering
         setInventoryData({
-          [nl3600.styleId]: inv3600,
-          [nl6240.styleId]: inv6240
+          regular: invRegular,
+          vneck: invVneck
         })
 
         // Filter products to only show in-stock colors
-        const filteredProducts = [nl3600, nl6240].map(product => {
-          const inventory = product.styleId === nl3600.styleId ? inv3600 : inv6240
-          // If no inventory, return product with EMPTY colors (not all colors)
-          if (!inventory) {
-            return { ...product, colors: [] }
-          }
+        const filteredRegular = invRegular ? {
+          ...regular,
+          colors: filterInStockColors(regular, invRegular)
+        } : { ...regular, colors: [] }
 
-          return {
-            ...product,
-            colors: filterInStockColors(product, inventory)
-          }
-        })
+        const filteredVneck = invVneck ? {
+          ...vneck,
+          colors: filterInStockColors(vneck, invVneck)
+        } : { ...vneck, colors: [] }
 
-        setProducts(filteredProducts)
+        setProducts({ regular: filteredRegular, vneck: filteredVneck })
         setInventoryLoading(false)
       } catch (err) {
         console.error('Failed to load products:', err)
@@ -82,6 +80,11 @@ export default function TShirtSelector({ selections, onUpdate, onNext, onBack })
     )
   }
 
+  const activeProduct = activeType === 'regular' ? products.regular : products.vneck
+  const imagePath = activeType === 'regular'
+    ? '/images/tshirts/nextlevel-3600'
+    : '/images/tshirts/nextlevel-6240'
+
   return (
     <div className="min-h-screen bg-gray-50 pb-32">
       {/* Header */}
@@ -99,6 +102,36 @@ export default function TShirtSelector({ selections, onUpdate, onNext, onBack })
               <p className="text-sm text-gray-500">{selections.length} of 3 selected</p>
             </div>
             <div className="w-16"></div>
+          </div>
+        </div>
+
+        {/* Type Toggle */}
+        <div className="max-w-4xl mx-auto px-4 pb-4">
+          <div className="flex bg-gray-100 rounded-lg p-1">
+            <button
+              onClick={() => setActiveType('regular')}
+              className={`
+                flex-1 py-3 rounded-md font-medium transition-colors
+                ${activeType === 'regular'
+                  ? 'bg-white text-gray-800 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-800'
+                }
+              `}
+            >
+              Regular T-Shirt
+            </button>
+            <button
+              onClick={() => setActiveType('vneck')}
+              className={`
+                flex-1 py-3 rounded-md font-medium transition-colors
+                ${activeType === 'vneck'
+                  ? 'bg-white text-gray-800 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-800'
+                }
+              `}
+            >
+              V-Neck T-Shirt
+            </button>
           </div>
         </div>
       </div>
@@ -132,20 +165,19 @@ export default function TShirtSelector({ selections, onUpdate, onNext, onBack })
         </div>
       )}
 
-      {/* Products */}
+      {/* Product */}
       <div className="max-w-4xl mx-auto px-4 py-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {products.map((product) => (
+        <div className="max-w-md mx-auto">
+          {activeProduct && (
             <ProductCard
-              key={product.styleId}
-              product={product}
-              imageBasePath={`/images/tshirts/${product.styleId}`}
+              product={activeProduct}
+              imageBasePath={imagePath}
               onSelect={handleSelect}
               isSelected={false}
-              inventory={inventoryData[product.styleId]}
+              inventory={inventoryData[activeType]}
               inventoryLoading={inventoryLoading}
             />
-          ))}
+          )}
         </div>
       </div>
 

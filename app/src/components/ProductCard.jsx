@@ -20,6 +20,14 @@ export default function ProductCard({
   const [selectedSize, setSelectedSize] = useState(selectedInfo?.size || '')
   const [availableSizes, setAvailableSizes] = useState([]) // Start empty, not all sizes
 
+  // Reset selected color when product colors change (e.g., after inventory filtering or tab switch)
+  useEffect(() => {
+    if (product.colors?.length > 0) {
+      setSelectedColor(product.colors[0])
+      setSelectedSize('')
+    }
+  }, [product.colors])
+
   // Update available sizes when color changes or inventory loads
   useEffect(() => {
     if (inventory && selectedColor) {
