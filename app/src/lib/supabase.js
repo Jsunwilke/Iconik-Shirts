@@ -25,6 +25,82 @@ export async function getOrders() {
   return data
 }
 
+export async function getPendingOrders() {
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*')
+    .or('status.is.null,status.eq.pending')
+    .order('created_at', { ascending: false })
+
+  if (error) throw error
+  return data
+}
+
+export async function getCompletedOrders() {
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('status', 'completed')
+    .order('ss_order_date', { ascending: false })
+
+  if (error) throw error
+  return data
+}
+
+export async function getOrderBatches() {
+  // Get unique batches with their info
+  const { data, error } = await supabase
+    .from('orders')
+    .select('ss_order_id, ss_order_date, batch_id')
+    .eq('status', 'completed')
+    .not('ss_order_id', 'is', null)
+    .order('ss_order_date', { ascending: false })
+
+  if (error) throw error
+
+  // Group by ss_order_id to get unique batches
+  const batches = {}
+  data?.forEach(order => {
+    if (order.ss_order_id && !batches[order.ss_order_id]) {
+      batches[order.ss_order_id] = {
+        ss_order_id: order.ss_order_id,
+        ss_order_date: order.ss_order_date,
+        batch_id: order.batch_id
+      }
+    }
+  })
+
+  return Object.values(batches)
+}
+
+export async function getOrdersByBatch(ssOrderId) {
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('ss_order_id', ssOrderId)
+    .order('employee_name', { ascending: true })
+
+  if (error) throw error
+  return data
+}
+
+export async function markOrdersCompleted(orderIds, ssOrderId) {
+  const batchId = `batch-${Date.now()}`
+  const { data, error } = await supabase
+    .from('orders')
+    .update({
+      status: 'completed',
+      ss_order_id: ssOrderId,
+      ss_order_date: new Date().toISOString(),
+      batch_id: batchId
+    })
+    .in('id', orderIds)
+    .select()
+
+  if (error) throw error
+  return data
+}
+
 export async function deleteOrder(id) {
   const { error } = await supabase
     .from('orders')

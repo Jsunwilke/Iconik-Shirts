@@ -5,12 +5,83 @@ import react from '@vitejs/plugin-react'
 const SS_API_USERNAME = '827653'
 const SS_API_PASSWORD = '77d3c48e-2f07-4109-80e7-12b5db61b5fb'
 
-// Custom plugin to handle /api/inventory locally
-function inventoryApiPlugin() {
+// Custom plugin to handle API routes locally
+function apiPlugin() {
   return {
-    name: 'inventory-api',
+    name: 'api-plugin',
     configureServer(server) {
+      // Handle /api/submit-order
       server.middlewares.use(async (req, res, next) => {
+        if (req.url === '/api/submit-order' && req.method === 'POST') {
+          let body = ''
+          req.on('data', chunk => body += chunk)
+          req.on('end', async () => {
+            try {
+              const { lineItems, shippingMethod, shippingAddress, testOrder, poNumber } = JSON.parse(body)
+
+              if (!lineItems || lineItems.length === 0) {
+                res.statusCode = 400
+                res.setHeader('Content-Type', 'application/json')
+                res.end(JSON.stringify({ error: 'No line items provided' }))
+                return
+              }
+
+              const auth = Buffer.from(`${SS_API_USERNAME}:${SS_API_PASSWORD}`).toString('base64')
+
+              const orderPayload = {
+                address: shippingAddress.address,
+                city: shippingAddress.city,
+                state: shippingAddress.state,
+                zip: shippingAddress.zip,
+                customer: shippingAddress.customer || '',
+                attn: shippingAddress.attn || '',
+                residential: shippingAddress.residential ?? true,
+                shippingMethod: shippingMethod || 1,
+                testOrder: testOrder ?? false,
+                poNumber: poNumber || `ICONIK-${Date.now()}`,
+                lines: lineItems.map(item => ({
+                  sku: item.identifier,
+                  qty: item.qty
+                }))
+              }
+
+              const response = await fetch('https://api.ssactivewear.com/v2/orders/', {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Basic ${auth}`,
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderPayload)
+              })
+
+              const data = await response.json()
+
+              if (!response.ok) {
+                res.statusCode = response.status
+                res.setHeader('Content-Type', 'application/json')
+                res.end(JSON.stringify({ error: 'Failed to submit order', details: data }))
+                return
+              }
+
+              res.statusCode = 200
+              res.setHeader('Content-Type', 'application/json')
+              res.end(JSON.stringify({
+                success: true,
+                order: data,
+                message: testOrder ? 'Test order submitted' : 'Order submitted'
+              }))
+
+            } catch (error) {
+              console.error('Submit order error:', error)
+              res.statusCode = 500
+              res.setHeader('Content-Type', 'application/json')
+              res.end(JSON.stringify({ error: 'Failed to submit order', message: error.message }))
+            }
+          })
+          return
+        }
+
+        // Handle /api/inventory
         if (!req.url.startsWith('/api/inventory')) {
           return next()
         }
@@ -104,5 +175,5 @@ function inventoryApiPlugin() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), inventoryApiPlugin()],
+  plugins: [react(), apiPlugin()],
 })
