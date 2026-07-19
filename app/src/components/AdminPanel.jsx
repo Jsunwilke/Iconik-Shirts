@@ -1,5 +1,15 @@
 import { useState, useEffect } from 'react'
-import { getPendingOrders, getOrderBatches, getOrdersByBatch, markOrdersCompleted, deleteOrder } from '../lib/supabase'
+import {
+  getPendingOrders,
+  getOrderBatches,
+  getOrdersByBatch,
+  markOrdersCompleted,
+  deleteOrder,
+  getArchivedOrders,
+  archiveOrders,
+  restoreOrders,
+  deleteOrders
+} from '../lib/supabase'
 
 const ADMIN_PASSWORD = 'iconik2024'
 
@@ -33,6 +43,7 @@ export default function AdminPanel() {
   const [password, setPassword] = useState('')
   const [activeTab, setActiveTab] = useState('pending')
   const [pendingOrders, setPendingOrders] = useState([])
+  const [archivedOrders, setArchivedOrders] = useState([])
   const [orderBatches, setOrderBatches] = useState([])
   const [expandedBatch, setExpandedBatch] = useState(null)
   const [batchOrders, setBatchOrders] = useState([])
@@ -63,6 +74,19 @@ export default function AdminPanel() {
     } catch (err) {
       console.error('Failed to load orders:', err)
       setError('Failed to load orders')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const loadArchivedOrders = async () => {
+    setLoading(true)
+    try {
+      const data = await getArchivedOrders()
+      setArchivedOrders(data || [])
+    } catch (err) {
+      console.error('Failed to load archived orders:', err)
+      setError('Failed to load archived orders')
     } finally {
       setLoading(false)
     }
@@ -99,6 +123,8 @@ export default function AdminPanel() {
   useEffect(() => {
     if (authenticated && activeTab === 'pending') {
       loadPendingOrders()
+    } else if (authenticated && activeTab === 'archived') {
+      loadArchivedOrders()
     } else if (authenticated && activeTab === 'history') {
       loadOrderHistory()
     }
@@ -113,6 +139,70 @@ export default function AdminPanel() {
     } catch (err) {
       console.error('Failed to delete:', err)
       alert('Failed to delete order')
+    }
+  }
+
+  const handleArchive = async (id) => {
+    try {
+      await archiveOrders([id])
+      setPendingOrders(pendingOrders.filter(o => o.id !== id))
+    } catch (err) {
+      console.error('Failed to archive:', err)
+      alert(err.message || 'Failed to archive order')
+    }
+  }
+
+  const handleArchiveAll = async () => {
+    if (pendingOrders.length === 0) return
+    if (!confirm(
+      `Archive all ${pendingOrders.length} pending order${pendingOrders.length !== 1 ? 's' : ''}? ` +
+      `They stay in the database and can be restored from the Archived tab.`
+    )) return
+
+    try {
+      await archiveOrders(pendingOrders.map(o => o.id))
+      setPendingOrders([])
+    } catch (err) {
+      console.error('Failed to archive orders:', err)
+      alert(err.message || 'Failed to archive orders')
+    }
+  }
+
+  const handleRestore = async (id) => {
+    try {
+      await restoreOrders([id])
+      setArchivedOrders(archivedOrders.filter(o => o.id !== id))
+    } catch (err) {
+      console.error('Failed to restore:', err)
+      alert(err.message || 'Failed to restore order')
+    }
+  }
+
+  const handleDeleteArchived = async (id) => {
+    if (!confirm('Permanently delete this order? This cannot be undone.')) return
+
+    try {
+      await deleteOrder(id)
+      setArchivedOrders(archivedOrders.filter(o => o.id !== id))
+    } catch (err) {
+      console.error('Failed to delete:', err)
+      alert('Failed to delete order')
+    }
+  }
+
+  const handleDeleteAllArchived = async () => {
+    if (archivedOrders.length === 0) return
+    if (!confirm(
+      `Permanently delete all ${archivedOrders.length} archived order${archivedOrders.length !== 1 ? 's' : ''}? ` +
+      `This cannot be undone.`
+    )) return
+
+    try {
+      await deleteOrders(archivedOrders.map(o => o.id))
+      setArchivedOrders([])
+    } catch (err) {
+      console.error('Failed to delete orders:', err)
+      alert('Failed to delete orders')
     }
   }
 
@@ -299,6 +389,16 @@ export default function AdminPanel() {
               Pending Orders
             </button>
             <button
+              onClick={() => setActiveTab('archived')}
+              className={`pb-2 px-1 font-medium transition-colors ${
+                activeTab === 'archived'
+                  ? 'text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Archived
+            </button>
+            <button
               onClick={() => setActiveTab('history')}
               className={`pb-2 px-1 font-medium transition-colors ${
                 activeTab === 'history'
@@ -447,6 +547,13 @@ export default function AdminPanel() {
                 >
                   Export CSV
                 </button>
+                <button
+                  onClick={handleArchiveAll}
+                  disabled={pendingOrders.length === 0}
+                  className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50"
+                >
+                  Archive All
+                </button>
               </div>
             </div>
 
@@ -468,12 +575,101 @@ export default function AdminPanel() {
                           {new Date(order.created_at).toLocaleString()}
                         </p>
                       </div>
-                      <button
-                        onClick={() => handleDelete(order.id)}
-                        className="text-red-600 hover:text-red-700 text-sm"
-                      >
-                        Delete
-                      </button>
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => handleArchive(order.id)}
+                          className="text-amber-700 hover:text-amber-800 text-sm"
+                        >
+                          Archive
+                        </button>
+                        <button
+                          onClick={() => handleDelete(order.id)}
+                          className="text-red-600 hover:text-red-700 text-sm"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+                      <div>
+                        <span className="text-gray-500">T-Shirt 1:</span><br/>
+                        {order.tshirt_1_style} - {order.tshirt_1_color} ({order.tshirt_1_size})
+                      </div>
+                      <div>
+                        <span className="text-gray-500">T-Shirt 2:</span><br/>
+                        {order.tshirt_2_style} - {order.tshirt_2_color} ({order.tshirt_2_size})
+                      </div>
+                      <div>
+                        <span className="text-gray-500">T-Shirt 3:</span><br/>
+                        {order.tshirt_3_style} - {order.tshirt_3_color} ({order.tshirt_3_size})
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Outerwear:</span><br/>
+                        {order.outerwear_type} - {order.outerwear_color} ({order.outerwear_size})
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        {activeTab === 'archived' && (
+          <>
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm text-gray-600">
+                {archivedOrders.length} archived order{archivedOrders.length !== 1 ? 's' : ''}
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={loadArchivedOrders}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                >
+                  Refresh
+                </button>
+                <button
+                  onClick={handleDeleteAllArchived}
+                  disabled={archivedOrders.length === 0}
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50"
+                >
+                  Delete All Permanently
+                </button>
+              </div>
+            </div>
+
+            {loading ? (
+              <div className="text-center text-gray-600 py-12">Loading archived orders...</div>
+            ) : archivedOrders.length === 0 ? (
+              <div className="text-center text-gray-600 py-12 bg-white rounded-lg shadow-sm">
+                No archived orders
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {archivedOrders.map((order) => (
+                  <div key={order.id} className="bg-white rounded-lg shadow-sm p-4">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <p className="font-semibold text-gray-800">{order.employee_name}</p>
+                        <p className="text-xs text-gray-500">
+                          {new Date(order.created_at).toLocaleString()}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => handleRestore(order.id)}
+                          className="text-blue-600 hover:text-blue-700 text-sm"
+                        >
+                          Restore
+                        </button>
+                        <button
+                          onClick={() => handleDeleteArchived(order.id)}
+                          className="text-red-600 hover:text-red-700 text-sm"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">

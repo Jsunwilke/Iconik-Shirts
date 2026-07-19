@@ -109,3 +109,55 @@ export async function deleteOrder(id) {
 
   if (error) throw error
 }
+
+export async function getArchivedOrders() {
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('status', 'archived')
+    .order('created_at', { ascending: false })
+
+  if (error) throw error
+  return data
+}
+
+// Archiving and restoring are UPDATEs, which Postgres RLS silently turns into
+// a 0-row no-op when no UPDATE policy matches. Verify rows actually changed so
+// a missing policy surfaces as an error instead of a button that does nothing.
+async function setStatus(orderIds, status) {
+  if (!orderIds?.length) return []
+
+  const { data, error } = await supabase
+    .from('orders')
+    .update({ status })
+    .in('id', orderIds)
+    .select()
+
+  if (error) throw error
+  if (!data || data.length === 0) {
+    throw new Error(
+      'No orders were updated. The database is missing an UPDATE policy on the ' +
+      'orders table -- run supabase-add-update-policy.sql in the Supabase SQL Editor.'
+    )
+  }
+  return data
+}
+
+export async function archiveOrders(orderIds) {
+  return setStatus(orderIds, 'archived')
+}
+
+export async function restoreOrders(orderIds) {
+  return setStatus(orderIds, 'pending')
+}
+
+export async function deleteOrders(orderIds) {
+  if (!orderIds?.length) return
+
+  const { error } = await supabase
+    .from('orders')
+    .delete()
+    .in('id', orderIds)
+
+  if (error) throw error
+}
