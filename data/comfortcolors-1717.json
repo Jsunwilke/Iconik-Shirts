@@ -1,0 +1,493 @@
+{
+  "styleId": "comfortcolors-1717",
+  "styleName": "Comfort Colors 1717",
+  "brandName": "Comfort Colors",
+  "styleCode": "Comfort Colors 1717",
+  "productType": "tshirt",
+  "title": "Garment-Dyed Heavyweight T-Shirt",
+  "colors": [
+    {
+      "colorName": "Banana",
+      "colorCode": "43",
+      "hexColor": "#F1E6B2",
+      "productImage": "product/banana.jpg",
+      "swatchImage": "swatches/banana.jpg"
+    },
+    {
+      "colorName": "Bay",
+      "colorCode": "56",
+      "hexColor": "#94A596",
+      "productImage": "product/bay.jpg",
+      "swatchImage": "swatches/bay.jpg"
+    },
+    {
+      "colorName": "Berry",
+      "colorCode": "71",
+      "hexColor": "#7E4966",
+      "productImage": "product/berry.jpg",
+      "swatchImage": "swatches/berry.jpg"
+    },
+    {
+      "colorName": "Black",
+      "colorCode": "50",
+      "hexColor": "#25282A",
+      "productImage": "product/black.jpg",
+      "swatchImage": "swatches/black.jpg"
+    },
+    {
+      "colorName": "Blossom",
+      "colorCode": "31",
+      "hexColor": "#F8BED6",
+      "productImage": "product/blossom.jpg",
+      "swatchImage": "swatches/blossom.jpg"
+    },
+    {
+      "colorName": "Blue Jean",
+      "colorCode": "98",
+      "hexColor": "#647692",
+      "productImage": "product/blue-jean.jpg",
+      "swatchImage": "swatches/blue-jean.jpg"
+    },
+    {
+      "colorName": "Blue Spruce",
+      "colorCode": "76",
+      "hexColor": "#004C45",
+      "productImage": "product/blue-spruce.jpg",
+      "swatchImage": "swatches/blue-spruce.jpg"
+    },
+    {
+      "colorName": "Brick",
+      "colorCode": "53",
+      "hexColor": "#8A1538",
+      "productImage": "product/brick.jpg",
+      "swatchImage": "swatches/brick.jpg"
+    },
+    {
+      "colorName": "Bright Orange",
+      "colorCode": "25",
+      "hexColor": "#FF6900",
+      "productImage": "product/bright-orange.jpg",
+      "swatchImage": "swatches/bright-orange.jpg"
+    },
+    {
+      "colorName": "Bright Salmon",
+      "colorCode": "51",
+      "hexColor": "#FF6D6A",
+      "productImage": "product/bright-salmon.jpg",
+      "swatchImage": "swatches/bright-salmon.jpg"
+    },
+    {
+      "colorName": "Burnt Orange",
+      "colorCode": "66",
+      "hexColor": "#FF6900",
+      "productImage": "product/burnt-orange.jpg",
+      "swatchImage": "swatches/burnt-orange.jpg"
+    },
+    {
+      "colorName": "Butter",
+      "colorCode": "41",
+      "hexColor": "#F5E1A4",
+      "productImage": "product/butter.jpg",
+      "swatchImage": "swatches/butter.jpg"
+    },
+    {
+      "colorName": "Chalky Mint",
+      "colorCode": "47",
+      "hexColor": "#5CB8B2",
+      "productImage": "product/chalky-mint.jpg",
+      "swatchImage": "swatches/chalky-mint.jpg"
+    },
+    {
+      "colorName": "Chambray",
+      "colorCode": "04",
+      "hexColor": "#BDD6E6",
+      "productImage": "product/chambray.jpg",
+      "swatchImage": "swatches/chambray.jpg"
+    },
+    {
+      "colorName": "Chili",
+      "colorCode": "70",
+      "hexColor": "#893C47",
+      "productImage": "product/chili.jpg",
+      "swatchImage": "swatches/chili.jpg"
+    },
+    {
+      "colorName": "China Blue",
+      "colorCode": "75",
+      "hexColor": "#002855",
+      "productImage": "product/china-blue.jpg",
+      "swatchImage": "swatches/china-blue.jpg"
+    },
+    {
+      "colorName": "Citrus",
+      "colorCode": "40",
+      "hexColor": "#FFC27B",
+      "productImage": "product/citrus.jpg",
+      "swatchImage": "swatches/citrus.jpg"
+    },
+    {
+      "colorName": "Crimson",
+      "colorCode": "22",
+      "hexColor": "#A4123F",
+      "productImage": "product/crimson.jpg",
+      "swatchImage": "swatches/crimson.jpg"
+    },
+    {
+      "colorName": "Crunchberry",
+      "colorCode": "69",
+      "hexColor": "#EF4A81",
+      "productImage": "product/crunchberry.jpg",
+      "swatchImage": "swatches/crunchberry.jpg"
+    },
+    {
+      "colorName": "Denim",
+      "colorCode": "68",
+      "hexColor": "#425563",
+      "productImage": "product/denim.jpg",
+      "swatchImage": "swatches/denim.jpg"
+    },
+    {
+      "colorName": "Dusk",
+      "colorCode": "42",
+      "hexColor": "#735B6A",
+      "productImage": "product/dusk.jpg",
+      "swatchImage": "swatches/dusk.jpg"
+    },
+    {
+      "colorName": "Emerald",
+      "colorCode": "23",
+      "hexColor": "#00685E",
+      "productImage": "product/emerald.jpg",
+      "swatchImage": "swatches/emerald.jpg"
+    },
+    {
+      "colorName": "Espresso",
+      "colorCode": "20",
+      "hexColor": "#533625",
+      "productImage": "product/espresso.jpg",
+      "swatchImage": "swatches/espresso.jpg"
+    },
+    {
+      "colorName": "Flo Blue",
+      "colorCode": "48",
+      "hexColor": "#5576D1",
+      "productImage": "product/flo-blue.jpg",
+      "swatchImage": "swatches/flo-blue.jpg"
+    },
+    {
+      "colorName": "Granite",
+      "colorCode": "59",
+      "hexColor": "#7C878E",
+      "productImage": "product/granite.jpg",
+      "swatchImage": "swatches/granite.jpg"
+    },
+    {
+      "colorName": "Grape",
+      "colorCode": "67",
+      "hexColor": "#211551",
+      "productImage": "product/grape.jpg",
+      "swatchImage": "swatches/grape.jpg"
+    },
+    {
+      "colorName": "Graphite",
+      "colorCode": "13",
+      "hexColor": "#1D252D",
+      "productImage": "product/graphite.jpg",
+      "swatchImage": "swatches/graphite.jpg"
+    },
+    {
+      "colorName": "Grey",
+      "colorCode": "58",
+      "hexColor": "#716E6A",
+      "productImage": "product/grey.jpg",
+      "swatchImage": "swatches/grey.jpg"
+    },
+    {
+      "colorName": "Hemp",
+      "colorCode": "64",
+      "hexColor": "#1C4220",
+      "productImage": "product/hemp.jpg",
+      "swatchImage": "swatches/hemp.jpg"
+    },
+    {
+      "colorName": "Hydrangea",
+      "colorCode": "12",
+      "hexColor": "#A7BCD6",
+      "productImage": "product/hydrangea.jpg",
+      "swatchImage": "swatches/hydrangea.jpg"
+    },
+    {
+      "colorName": "Ice Blue",
+      "colorCode": "37",
+      "hexColor": "#5B7F95",
+      "productImage": "product/ice-blue.jpg",
+      "swatchImage": "swatches/ice-blue.jpg"
+    },
+    {
+      "colorName": "Island Green",
+      "colorCode": "02",
+      "hexColor": "#00957A",
+      "productImage": "product/island-green.jpg",
+      "swatchImage": "swatches/island-green.jpg"
+    },
+    {
+      "colorName": "Island Reef",
+      "colorCode": "72",
+      "hexColor": "#8FE2B0",
+      "productImage": "product/island-reef.jpg",
+      "swatchImage": "swatches/island-reef.jpg"
+    },
+    {
+      "colorName": "Ivory",
+      "colorCode": "24",
+      "hexColor": "#E7CEB5",
+      "productImage": "product/ivory.jpg",
+      "swatchImage": "swatches/ivory.jpg"
+    },
+    {
+      "colorName": "Khaki",
+      "colorCode": "77",
+      "hexColor": "#A09074",
+      "productImage": "product/khaki.jpg",
+      "swatchImage": "swatches/khaki.jpg"
+    },
+    {
+      "colorName": "Lagoon",
+      "colorCode": "63",
+      "hexColor": "#05C3DE",
+      "productImage": "product/lagoon.jpg",
+      "swatchImage": "swatches/lagoon.jpg"
+    },
+    {
+      "colorName": "Light Green",
+      "colorCode": "39",
+      "hexColor": "#5C7F71",
+      "productImage": "product/light-green.jpg",
+      "swatchImage": "swatches/light-green.jpg"
+    },
+    {
+      "colorName": "Melon",
+      "colorCode": "34",
+      "hexColor": "#FA9370",
+      "productImage": "product/melon.jpg",
+      "swatchImage": "swatches/melon.jpg"
+    },
+    {
+      "colorName": "Midnight",
+      "colorCode": "86",
+      "hexColor": "#1B365D",
+      "productImage": "product/midnight.jpg",
+      "swatchImage": "swatches/midnight.jpg"
+    },
+    {
+      "colorName": "Moss",
+      "colorCode": "29",
+      "hexColor": "#22372B",
+      "productImage": "product/moss.jpg",
+      "swatchImage": "swatches/moss.jpg"
+    },
+    {
+      "colorName": "Mustard",
+      "colorCode": "28",
+      "hexColor": "#F2CD00",
+      "productImage": "product/mustard.jpg",
+      "swatchImage": "swatches/mustard.jpg"
+    },
+    {
+      "colorName": "Mystic Blue",
+      "colorCode": "94",
+      "hexColor": "#5C88DA",
+      "productImage": "product/mystic-blue.jpg",
+      "swatchImage": "swatches/mystic-blue.jpg"
+    },
+    {
+      "colorName": "Navy",
+      "colorCode": "62",
+      "hexColor": "#0C2340",
+      "productImage": "product/navy.jpg",
+      "swatchImage": "swatches/navy.jpg"
+    },
+    {
+      "colorName": "Neon Cantaloupe",
+      "colorCode": "90",
+      "hexColor": "#FFBBA4",
+      "productImage": "product/neon-cantaloupe.jpg",
+      "swatchImage": "swatches/neon-cantaloupe.jpg"
+    },
+    {
+      "colorName": "Neon Lemon",
+      "colorCode": "91",
+      "hexColor": "#EFF4A4",
+      "productImage": "product/neon-lemon.jpg",
+      "swatchImage": "swatches/neon-lemon.jpg"
+    },
+    {
+      "colorName": "Neon Pink",
+      "colorCode": "30",
+      "hexColor": "#F04E98",
+      "productImage": "product/neon-pink.jpg",
+      "swatchImage": "swatches/neon-pink.jpg"
+    },
+    {
+      "colorName": "Neon Red Orange",
+      "colorCode": "15",
+      "hexColor": "#FF585D",
+      "productImage": "product/neon-red-orange.jpg",
+      "swatchImage": "swatches/neon-red-orange.jpg"
+    },
+    {
+      "colorName": "Neon Violet",
+      "colorCode": "92",
+      "hexColor": "#BF9BDE",
+      "productImage": "product/neon-violet.jpg",
+      "swatchImage": "swatches/neon-violet.jpg"
+    },
+    {
+      "colorName": "Orchid",
+      "colorCode": "21",
+      "hexColor": "#C7B2DE",
+      "productImage": "product/orchid.jpg",
+      "swatchImage": "swatches/orchid.jpg"
+    },
+    {
+      "colorName": "Paprika",
+      "colorCode": "11",
+      "hexColor": "#CE0037",
+      "productImage": "product/paprika.jpg",
+      "swatchImage": "swatches/paprika.jpg"
+    },
+    {
+      "colorName": "Peachy",
+      "colorCode": "35",
+      "hexColor": "#d46c36",
+      "productImage": "product/peachy.jpg",
+      "swatchImage": "swatches/peachy.jpg"
+    },
+    {
+      "colorName": "Pepper",
+      "colorCode": "09",
+      "hexColor": "#4E4B48",
+      "productImage": "product/pepper.jpg",
+      "swatchImage": "swatches/pepper.jpg"
+    },
+    {
+      "colorName": "Periwinkle",
+      "colorCode": "45",
+      "hexColor": "#485CC7",
+      "productImage": "product/periwinkle.jpg",
+      "swatchImage": "swatches/periwinkle.jpg"
+    },
+    {
+      "colorName": "Red",
+      "colorCode": "07",
+      "hexColor": "#C8102E",
+      "productImage": "product/red.jpg",
+      "swatchImage": "swatches/red.jpg"
+    },
+    {
+      "colorName": "Rose Quartz",
+      "colorCode": "44",
+      "hexColor": "#E2ACD7",
+      "productImage": "product/rose-quartz.jpg",
+      "swatchImage": "swatches/rose-quartz.jpg"
+    },
+    {
+      "colorName": "Royal Caribe",
+      "colorCode": "97",
+      "hexColor": "#0082BA",
+      "productImage": "product/royal-caribe.jpg",
+      "swatchImage": "swatches/royal-caribe.jpg"
+    },
+    {
+      "colorName": "Sage",
+      "colorCode": "38",
+      "hexColor": "#3E4827",
+      "productImage": "product/sage.jpg",
+      "swatchImage": "swatches/sage.jpg"
+    },
+    {
+      "colorName": "Sandstone",
+      "colorCode": "73",
+      "hexColor": "#A69F88",
+      "productImage": "product/sandstone.jpg",
+      "swatchImage": "swatches/sandstone.jpg"
+    },
+    {
+      "colorName": "Sapphire",
+      "colorCode": "89",
+      "hexColor": "#007DBA",
+      "productImage": "product/sapphire.jpg",
+      "swatchImage": "swatches/sapphire.jpg"
+    },
+    {
+      "colorName": "Seafoam",
+      "colorCode": "05",
+      "hexColor": "#487A7B",
+      "productImage": "product/seafoam.jpg",
+      "swatchImage": "swatches/seafoam.jpg"
+    },
+    {
+      "colorName": "Terracotta",
+      "colorCode": "65",
+      "hexColor": "#E3775E",
+      "productImage": "product/terracotta.jpg",
+      "swatchImage": "swatches/terracotta.jpg"
+    },
+    {
+      "colorName": "True Navy",
+      "colorCode": "61",
+      "hexColor": "#041E42",
+      "productImage": "product/true-navy.jpg",
+      "swatchImage": "swatches/true-navy.jpg"
+    },
+    {
+      "colorName": "Violet",
+      "colorCode": "57",
+      "hexColor": "#7474C1",
+      "productImage": "product/violet.jpg",
+      "swatchImage": "swatches/violet.jpg"
+    },
+    {
+      "colorName": "Washed Denim",
+      "colorCode": "26",
+      "hexColor": "#6787B7",
+      "productImage": "product/washed-denim.jpg",
+      "swatchImage": "swatches/washed-denim.jpg"
+    },
+    {
+      "colorName": "Watermelon",
+      "colorCode": "46",
+      "hexColor": "#F4364C",
+      "productImage": "product/watermelon.jpg",
+      "swatchImage": "swatches/watermelon.jpg"
+    },
+    {
+      "colorName": "White",
+      "colorCode": "00",
+      "hexColor": "#ffffff",
+      "productImage": "product/white.jpg",
+      "swatchImage": "swatches/white.jpg"
+    },
+    {
+      "colorName": "Wine",
+      "colorCode": "87",
+      "hexColor": "#51284F",
+      "productImage": "product/wine.jpg",
+      "swatchImage": "swatches/wine.jpg"
+    },
+    {
+      "colorName": "Yam",
+      "colorCode": "32",
+      "hexColor": "#BE531C",
+      "productImage": "product/yam.jpg",
+      "swatchImage": "swatches/yam.jpg"
+    },
+    {
+      "colorName": "Yankey Blue",
+      "colorCode": "80",
+      "hexColor": "#829CA5",
+      "productImage": "product/yankey-blue.jpg",
+      "swatchImage": "swatches/yankey-blue.jpg"
+    }
+  ]
+}

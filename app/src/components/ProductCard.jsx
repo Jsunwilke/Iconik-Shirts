@@ -2,7 +2,21 @@ import { useState, useEffect } from 'react'
 import ColorSwatch from './ColorSwatch'
 import { getAvailableSizes } from '../lib/inventory'
 
-const SIZES = ['S', 'M', 'L', 'XL', '2XL', '3XL']
+// Canonical size order. The inventory API returns sizes in arbitrary order,
+// so anything in stock gets sorted against this list before display.
+const SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL']
+
+function sortSizes(sizes) {
+  return [...sizes].sort((a, b) => {
+    const ia = SIZE_ORDER.indexOf(a)
+    const ib = SIZE_ORDER.indexOf(b)
+    // Unrecognized sizes sort to the end, alphabetically
+    if (ia === -1 && ib === -1) return a.localeCompare(b)
+    if (ia === -1) return 1
+    if (ib === -1) return -1
+    return ia - ib
+  })
+}
 
 export default function ProductCard({
   product,
@@ -31,7 +45,7 @@ export default function ProductCard({
   // Update available sizes when color changes or inventory loads
   useEffect(() => {
     if (inventory && selectedColor) {
-      const sizes = getAvailableSizes(inventory, selectedColor.colorName)
+      const sizes = sortSizes(getAvailableSizes(inventory, selectedColor.colorName))
       setAvailableSizes(sizes)
       // Reset size if current selection is no longer available
       if (selectedSize && !sizes.includes(selectedSize)) {

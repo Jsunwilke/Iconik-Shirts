@@ -2,50 +2,65 @@ import { useState, useEffect } from 'react'
 import ProductCard from './ProductCard'
 import { fetchInventory, filterInStockColors } from '../lib/inventory'
 
+// The two shirts employees choose between. Adding a third is just another entry.
+const STYLES = [
+  {
+    key: 'comfortcolors',
+    dataFile: '/data/comfortcolors-1717.json',
+    imagePath: '/images/tshirts/comfortcolors-1717',
+    label: 'Comfort Colors 1717',
+    sublabel: 'Garment-Dyed Heavyweight'
+  },
+  {
+    key: 'bellacanvas',
+    dataFile: '/data/bellacanvas-3001cvc.json',
+    imagePath: '/images/tshirts/bellacanvas-3001cvc',
+    label: 'Bella + Canvas 3001CVC',
+    sublabel: 'Soft Blend'
+  }
+]
+
 export default function TShirtSelector({ selections, onUpdate, onNext, onBack }) {
-  const [products, setProducts] = useState({ regular: null, vneck: null })
-  const [inventoryData, setInventoryData] = useState({ regular: null, vneck: null })
-  const [activeType, setActiveType] = useState('regular')
+  const [products, setProducts] = useState({})
+  const [inventoryData, setInventoryData] = useState({})
+  const [activeType, setActiveType] = useState(STYLES[0].key)
   const [loading, setLoading] = useState(true)
   const [inventoryLoading, setInventoryLoading] = useState(true)
 
   useEffect(() => {
     async function loadProducts() {
       try {
-        // Load product data first (regular = 3600, vneck = 6240)
-        const [regular, vneck] = await Promise.all([
-          fetch('/data/nextlevel-3600.json').then(r => r.json()),
-          fetch('/data/nextlevel-6240.json').then(r => r.json())
-        ])
+        // Load product data first so the page can render while stock is checked
+        const loaded = await Promise.all(
+          STYLES.map(s => fetch(s.dataFile).then(r => r.json()))
+        )
 
-        // Show products immediately with loading state
-        setProducts({ regular, vneck })
+        const byKey = Object.fromEntries(
+          STYLES.map((s, i) => [s.key, loaded[i]])
+        )
+        setProducts(byKey)
         setLoading(false)
 
-        // Fetch live inventory from IL warehouse
-        const [invRegular, invVneck] = await Promise.all([
-          fetchInventory(regular.styleCode),
-          fetchInventory(vneck.styleCode)
-        ])
+        // Fetch live inventory from the IL (Lockport) warehouse
+        const inventories = await Promise.all(
+          STYLES.map((s, i) => fetchInventory(loaded[i].styleCode))
+        )
 
-        // Store inventory data for size filtering
-        setInventoryData({
-          regular: invRegular,
-          vneck: invVneck
-        })
+        // Store inventory data for per-color size filtering
+        setInventoryData(
+          Object.fromEntries(STYLES.map((s, i) => [s.key, inventories[i]]))
+        )
 
-        // Filter products to only show in-stock colors
-        const filteredRegular = invRegular ? {
-          ...regular,
-          colors: filterInStockColors(regular, invRegular)
-        } : { ...regular, colors: [] }
-
-        const filteredVneck = invVneck ? {
-          ...vneck,
-          colors: filterInStockColors(vneck, invVneck)
-        } : { ...vneck, colors: [] }
-
-        setProducts({ regular: filteredRegular, vneck: filteredVneck })
+        // Filter to in-stock colors only. If inventory is unavailable, show
+        // NO colors rather than falsely offering everything.
+        setProducts(Object.fromEntries(STYLES.map((s, i) => {
+          const product = loaded[i]
+          const inv = inventories[i]
+          return [s.key, inv
+            ? { ...product, colors: filterInStockColors(product, inv) }
+            : { ...product, colors: [] }
+          ]
+        })))
         setInventoryLoading(false)
       } catch (err) {
         console.error('Failed to load products:', err)
@@ -80,10 +95,9 @@ export default function TShirtSelector({ selections, onUpdate, onNext, onBack })
     )
   }
 
-  const activeProduct = activeType === 'regular' ? products.regular : products.vneck
-  const imagePath = activeType === 'regular'
-    ? '/images/tshirts/nextlevel-3600'
-    : '/images/tshirts/nextlevel-6240'
+  const activeStyle = STYLES.find(s => s.key === activeType)
+  const activeProduct = products[activeType]
+  const imagePath = activeStyle.imagePath
 
   return (
     <div className="min-h-screen bg-gray-50 pb-32">
@@ -108,30 +122,22 @@ export default function TShirtSelector({ selections, onUpdate, onNext, onBack })
         {/* Type Toggle */}
         <div className="max-w-4xl mx-auto px-4 pb-4">
           <div className="flex bg-gray-100 rounded-lg p-1">
-            <button
-              onClick={() => setActiveType('regular')}
-              className={`
-                flex-1 py-3 rounded-md font-medium transition-colors
-                ${activeType === 'regular'
-                  ? 'bg-white text-gray-800 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-800'
-                }
-              `}
-            >
-              Regular T-Shirt
-            </button>
-            <button
-              onClick={() => setActiveType('vneck')}
-              className={`
-                flex-1 py-3 rounded-md font-medium transition-colors
-                ${activeType === 'vneck'
-                  ? 'bg-white text-gray-800 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-800'
-                }
-              `}
-            >
-              V-Neck T-Shirt
-            </button>
+            {STYLES.map((style) => (
+              <button
+                key={style.key}
+                onClick={() => setActiveType(style.key)}
+                className={`
+                  flex-1 py-2 px-2 rounded-md transition-colors
+                  ${activeType === style.key
+                    ? 'bg-white text-gray-800 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-800'
+                  }
+                `}
+              >
+                <span className="block font-medium text-sm leading-tight">{style.label}</span>
+                <span className="block text-xs text-gray-500 leading-tight">{style.sublabel}</span>
+              </button>
+            ))}
           </div>
         </div>
       </div>

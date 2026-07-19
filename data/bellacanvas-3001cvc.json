@@ -1,0 +1,598 @@
+{
+  "styleId": "bellacanvas-3001cvc",
+  "styleName": "Bella + Canvas 3001CVC",
+  "brandName": "BELLA + CANVAS",
+  "styleCode": "Bella + Canvas 3001CVC",
+  "productType": "tshirt",
+  "title": "Unisex Soft Blend T-Shirt",
+  "colors": [
+    {
+      "colorName": "Athletic Heather",
+      "colorCode": "02",
+      "hexColor": "#C1C6C8",
+      "productImage": "product/athletic-heather.jpg",
+      "swatchImage": "swatches/athletic-heather.jpg"
+    },
+    {
+      "colorName": "Black Heather",
+      "colorCode": "51",
+      "hexColor": "#3D3935",
+      "productImage": "product/black-heather.jpg",
+      "swatchImage": "swatches/black-heather.jpg"
+    },
+    {
+      "colorName": "Dark Grey Heather",
+      "colorCode": "52",
+      "hexColor": "#25282A",
+      "productImage": "product/dark-grey-heather.jpg",
+      "swatchImage": "swatches/dark-grey-heather.jpg"
+    },
+    {
+      "colorName": "Deep Heather",
+      "colorCode": "53",
+      "hexColor": "#716E6A",
+      "productImage": "product/deep-heather.jpg",
+      "swatchImage": "swatches/deep-heather.jpg"
+    },
+    {
+      "colorName": "Heather Aqua",
+      "colorCode": "37",
+      "hexColor": "#44A8C6",
+      "productImage": "product/heather-aqua.jpg",
+      "swatchImage": "swatches/heather-aqua.jpg"
+    },
+    {
+      "colorName": "Heather Autumn",
+      "colorCode": "01",
+      "hexColor": "#98563D",
+      "productImage": "product/heather-autumn.jpg",
+      "swatchImage": "swatches/heather-autumn.jpg"
+    },
+    {
+      "colorName": "Heather Baby Blue",
+      "colorCode": "36",
+      "hexColor": "#89B2C4",
+      "productImage": "product/heather-baby-blue.jpg",
+      "swatchImage": "swatches/heather-baby-blue.jpg"
+    },
+    {
+      "colorName": "Heather Blue",
+      "colorCode": "23",
+      "hexColor": "#8E9FBC",
+      "productImage": "product/heather-blue.jpg",
+      "swatchImage": "swatches/heather-blue.jpg"
+    },
+    {
+      "colorName": "Heather Blue Lagoon",
+      "colorCode": "08",
+      "hexColor": "#86A1A9",
+      "productImage": "product/heather-blue-lagoon.jpg",
+      "swatchImage": "swatches/heather-blue-lagoon.jpg"
+    },
+    {
+      "colorName": "Heather Blue Storm",
+      "colorCode": "82",
+      "hexColor": "#708187",
+      "productImage": "product/heather-blue-storm.jpg",
+      "swatchImage": "swatches/heather-blue-storm.jpg"
+    },
+    {
+      "colorName": "Heather Brown",
+      "colorCode": "39",
+      "hexColor": "#5E4B3C",
+      "productImage": "product/heather-brown.jpg",
+      "swatchImage": "swatches/heather-brown.jpg"
+    },
+    {
+      "colorName": "Heather Bubble Gum",
+      "colorCode": "14",
+      "hexColor": "#FFBBE0",
+      "productImage": "product/heather-bubble-gum.jpg",
+      "swatchImage": "swatches/heather-bubble-gum.jpg"
+    },
+    {
+      "colorName": "Heather Canvas Red",
+      "colorCode": "06",
+      "hexColor": "#750F1A",
+      "productImage": "product/heather-canvas-red.jpg",
+      "swatchImage": "swatches/heather-canvas-red.jpg"
+    },
+    {
+      "colorName": "Heather Cardinal",
+      "colorCode": "73",
+      "hexColor": "#651D32",
+      "productImage": "product/heather-cardinal.jpg",
+      "swatchImage": "swatches/heather-cardinal.jpg"
+    },
+    {
+      "colorName": "Heather Carolina Blue",
+      "colorCode": "38",
+      "hexColor": "#7BA6DE",
+      "productImage": "product/heather-carolina-blue.jpg",
+      "swatchImage": "swatches/heather-carolina-blue.jpg"
+    },
+    {
+      "colorName": "Heather Cement",
+      "colorCode": "05",
+      "hexColor": "#C2BEB8",
+      "productImage": "product/heather-cement.jpg",
+      "swatchImage": "swatches/heather-cement.jpg"
+    },
+    {
+      "colorName": "Heather Charity Pink",
+      "colorCode": "13",
+      "hexColor": "#F6648D",
+      "productImage": "product/heather-charity-pink.jpg",
+      "swatchImage": "swatches/heather-charity-pink.jpg"
+    },
+    {
+      "colorName": "Heather Clay",
+      "colorCode": "74",
+      "hexColor": "#A6675A",
+      "productImage": "product/heather-clay.jpg",
+      "swatchImage": "swatches/heather-clay.jpg"
+    },
+    {
+      "colorName": "Heather Columbia Blue",
+      "colorCode": "22",
+      "hexColor": "#638ACC",
+      "productImage": "product/heather-columbia-blue.jpg",
+      "swatchImage": "swatches/heather-columbia-blue.jpg"
+    },
+    {
+      "colorName": "Heather Cool Grey",
+      "colorCode": "04",
+      "hexColor": "#CDC0B9",
+      "productImage": "product/heather-cool-grey.jpg",
+      "swatchImage": "swatches/heather-cool-grey.jpg"
+    },
+    {
+      "colorName": "Heather Dark Lavender",
+      "colorCode": "83",
+      "hexColor": "#A194c2",
+      "productImage": "product/heather-dark-lavender.jpg",
+      "swatchImage": "swatches/heather-dark-lavender.jpg"
+    },
+    {
+      "colorName": "Heather Deep Teal",
+      "colorCode": "21",
+      "hexColor": "#34657F",
+      "productImage": "product/heather-deep-teal.jpg",
+      "swatchImage": "swatches/heather-deep-teal.jpg"
+    },
+    {
+      "colorName": "Heather Dust",
+      "colorCode": "98",
+      "hexColor": "#C5B9AC",
+      "productImage": "product/heather-dust.jpg",
+      "swatchImage": "swatches/heather-dust.jpg"
+    },
+    {
+      "colorName": "Heather Dusty Blue",
+      "colorCode": "43",
+      "hexColor": "#92ACA0",
+      "productImage": "product/heather-dusty-blue.jpg",
+      "swatchImage": "swatches/heather-dusty-blue.jpg"
+    },
+    {
+      "colorName": "Heather Emerald",
+      "colorCode": "18",
+      "hexColor": "#1C2821",
+      "productImage": "product/heather-emerald.jpg",
+      "swatchImage": "swatches/heather-emerald.jpg"
+    },
+    {
+      "colorName": "Heather Forest",
+      "colorCode": "54",
+      "hexColor": "#48655B",
+      "productImage": "product/heather-forest.jpg",
+      "swatchImage": "swatches/heather-forest.jpg"
+    },
+    {
+      "colorName": "Heather French Vanilla",
+      "colorCode": "15",
+      "hexColor": "#F1E19B",
+      "productImage": "product/heather-french-vanilla.jpg",
+      "swatchImage": "swatches/heather-french-vanilla.jpg"
+    },
+    {
+      "colorName": "Heather Grass Green",
+      "colorCode": "55",
+      "hexColor": "#006341",
+      "productImage": "product/heather-grass-green.jpg",
+      "swatchImage": "swatches/heather-grass-green.jpg"
+    },
+    {
+      "colorName": "Heather Green",
+      "colorCode": "56",
+      "hexColor": "#79863C",
+      "productImage": "product/heather-green.jpg",
+      "swatchImage": "swatches/heather-green.jpg"
+    },
+    {
+      "colorName": "Heather Ice Blue",
+      "colorCode": "19",
+      "hexColor": "#B1E4E3",
+      "productImage": "product/heather-ice-blue.jpg",
+      "swatchImage": "swatches/heather-ice-blue.jpg"
+    },
+    {
+      "colorName": "Heather Kelly",
+      "colorCode": "17",
+      "hexColor": "#00965E",
+      "productImage": "product/heather-kelly.jpg",
+      "swatchImage": "swatches/heather-kelly.jpg"
+    },
+    {
+      "colorName": "Heather Lapis",
+      "colorCode": "75",
+      "hexColor": "#685BC7",
+      "productImage": "product/heather-lapis.jpg",
+      "swatchImage": "swatches/heather-lapis.jpg"
+    },
+    {
+      "colorName": "Heather Magenta",
+      "colorCode": "09",
+      "hexColor": "#945E93",
+      "productImage": "product/heather-magenta.jpg",
+      "swatchImage": "swatches/heather-magenta.jpg"
+    },
+    {
+      "colorName": "Heather Marmalade",
+      "colorCode": "62",
+      "hexColor": "#FFAA00",
+      "productImage": "product/heather-marmalade.jpg",
+      "swatchImage": "swatches/heather-marmalade.jpg"
+    },
+    {
+      "colorName": "Heather Maroon",
+      "colorCode": "57",
+      "hexColor": "#582D40",
+      "productImage": "product/heather-maroon.jpg",
+      "swatchImage": "swatches/heather-maroon.jpg"
+    },
+    {
+      "colorName": "Heather Mauve",
+      "colorCode": "33",
+      "hexColor": "#B17C7B",
+      "productImage": "product/heather-mauve.jpg",
+      "swatchImage": "swatches/heather-mauve.jpg"
+    },
+    {
+      "colorName": "Heather Midnight Navy",
+      "colorCode": "79",
+      "hexColor": "#3B4559",
+      "productImage": "product/heather-midnight-navy.jpg",
+      "swatchImage": "swatches/heather-midnight-navy.jpg"
+    },
+    {
+      "colorName": "Heather Military Green",
+      "colorCode": "45",
+      "hexColor": "#535435",
+      "productImage": "product/heather-military-green.jpg",
+      "swatchImage": "swatches/heather-military-green.jpg"
+    },
+    {
+      "colorName": "Heather Mint",
+      "colorCode": "16",
+      "hexColor": "#A8D5BA",
+      "productImage": "product/heather-mint.jpg",
+      "swatchImage": "swatches/heather-mint.jpg"
+    },
+    {
+      "colorName": "Heather Mustard",
+      "colorCode": "41",
+      "hexColor": "#DAAA00",
+      "productImage": "product/heather-mustard.jpg",
+      "swatchImage": "swatches/heather-mustard.jpg"
+    },
+    {
+      "colorName": "Heather Natural",
+      "colorCode": "20",
+      "hexColor": "#DFD1A7",
+      "productImage": "product/heather-natural.jpg",
+      "swatchImage": "swatches/heather-natural.jpg"
+    },
+    {
+      "colorName": "Heather Navy",
+      "colorCode": "76",
+      "hexColor": "#3B4559",
+      "productImage": "product/heather-navy.jpg",
+      "swatchImage": "swatches/heather-navy.jpg"
+    },
+    {
+      "colorName": "Heather Oatmeal",
+      "colorCode": "44",
+      "hexColor": "#D1CCBD",
+      "productImage": "product/heather-oatmeal.jpg",
+      "swatchImage": "swatches/heather-oatmeal.jpg"
+    },
+    {
+      "colorName": "Heather Olive",
+      "colorCode": "58",
+      "hexColor": "#7A7256",
+      "productImage": "product/heather-olive.jpg",
+      "swatchImage": "swatches/heather-olive.jpg"
+    },
+    {
+      "colorName": "Heather Orange",
+      "colorCode": "66",
+      "hexColor": "#CF6921",
+      "productImage": "product/heather-orange.jpg",
+      "swatchImage": "swatches/heather-orange.jpg"
+    },
+    {
+      "colorName": "Heather Orchid",
+      "colorCode": "67",
+      "hexColor": "#C299A1",
+      "productImage": "product/heather-orchid.jpg",
+      "swatchImage": "swatches/heather-orchid.jpg"
+    },
+    {
+      "colorName": "Heather Peach",
+      "colorCode": "48",
+      "hexColor": "#FFC286",
+      "productImage": "product/heather-peach.jpg",
+      "swatchImage": "swatches/heather-peach.jpg"
+    },
+    {
+      "colorName": "Heather Pink",
+      "colorCode": "32",
+      "hexColor": "#D38F84",
+      "productImage": "product/heather-pink.jpg",
+      "swatchImage": "swatches/heather-pink.jpg"
+    },
+    {
+      "colorName": "Heather Pink Gravel",
+      "colorCode": "30",
+      "hexColor": "#C5AA9C",
+      "productImage": "product/heather-pink-gravel.jpg",
+      "swatchImage": "swatches/heather-pink-gravel.jpg"
+    },
+    {
+      "colorName": "Heather Prism Blue",
+      "colorCode": "25",
+      "hexColor": "#94A9CB",
+      "productImage": "product/heather-prism-blue.jpg",
+      "swatchImage": "swatches/heather-prism-blue.jpg"
+    },
+    {
+      "colorName": "Heather Prism Dusty Blue",
+      "colorCode": "26",
+      "hexColor": "#92ACA0",
+      "productImage": "product/heather-prism-dusty-blue.jpg",
+      "swatchImage": "swatches/heather-prism-dusty-blue.jpg"
+    },
+    {
+      "colorName": "Heather Prism Ice Blue",
+      "colorCode": "27",
+      "hexColor": "#BFCEC2",
+      "productImage": "product/heather-prism-ice-blue.jpg",
+      "swatchImage": "swatches/heather-prism-ice-blue.jpg"
+    },
+    {
+      "colorName": "Heather Prism Lilac",
+      "colorCode": "28",
+      "hexColor": "#D7B9E4",
+      "productImage": "product/heather-prism-lilac.jpg",
+      "swatchImage": "swatches/heather-prism-lilac.jpg"
+    },
+    {
+      "colorName": "Heather Prism Mint",
+      "colorCode": "29",
+      "hexColor": "#A0DAB3",
+      "productImage": "product/heather-prism-mint.jpg",
+      "swatchImage": "swatches/heather-prism-mint.jpg"
+    },
+    {
+      "colorName": "Heather Prism Natural",
+      "colorCode": "24",
+      "hexColor": "#D6D2C4",
+      "productImage": "product/heather-prism-natural.jpg",
+      "swatchImage": "swatches/heather-prism-natural.jpg"
+    },
+    {
+      "colorName": "Heather Prism Peach",
+      "colorCode": "34",
+      "hexColor": "#EABEB0",
+      "productImage": "product/heather-prism-peach.jpg",
+      "swatchImage": "swatches/heather-prism-peach.jpg"
+    },
+    {
+      "colorName": "Heather Prism Sunset",
+      "colorCode": "35",
+      "hexColor": "#E8927C",
+      "productImage": "product/heather-prism-sunset.jpg",
+      "swatchImage": "swatches/heather-prism-sunset.jpg"
+    },
+    {
+      "colorName": "Heather Purple",
+      "colorCode": "07",
+      "hexColor": "#784E90",
+      "productImage": "product/heather-purple.jpg",
+      "swatchImage": "swatches/heather-purple.jpg"
+    },
+    {
+      "colorName": "Heather Raspberry",
+      "colorCode": "31",
+      "hexColor": "#A50034",
+      "productImage": "product/heather-raspberry.jpg",
+      "swatchImage": "swatches/heather-raspberry.jpg"
+    },
+    {
+      "colorName": "Heather Red",
+      "colorCode": "70",
+      "hexColor": "#BF0D3E",
+      "productImage": "product/heather-red.jpg",
+      "swatchImage": "swatches/heather-red.jpg"
+    },
+    {
+      "colorName": "Heather Sage",
+      "colorCode": "10",
+      "hexColor": "#95A69F",
+      "productImage": "product/heather-sage.jpg",
+      "swatchImage": "swatches/heather-sage.jpg"
+    },
+    {
+      "colorName": "Heather Sand Dune",
+      "colorCode": "03",
+      "hexColor": "#E1BA8F",
+      "productImage": "product/heather-sand-dune.jpg",
+      "swatchImage": "swatches/heather-sand-dune.jpg"
+    },
+    {
+      "colorName": "Heather Sea Green",
+      "colorCode": "63",
+      "hexColor": "#00B9B4",
+      "productImage": "product/heather-sea-green.jpg",
+      "swatchImage": "swatches/heather-sea-green.jpg"
+    },
+    {
+      "colorName": "Heather Silver",
+      "colorCode": "11",
+      "hexColor": "#C7C9C7",
+      "productImage": "product/heather-silver.jpg",
+      "swatchImage": "swatches/heather-silver.jpg"
+    },
+    {
+      "colorName": "Heather Slate",
+      "colorCode": "59",
+      "hexColor": "#254A5D",
+      "productImage": "product/heather-slate.jpg",
+      "swatchImage": "swatches/heather-slate.jpg"
+    },
+    {
+      "colorName": "Heather Soft Cream",
+      "colorCode": "46",
+      "hexColor": "#DECA9E",
+      "productImage": "product/heather-soft-cream.jpg",
+      "swatchImage": "swatches/heather-soft-cream.jpg"
+    },
+    {
+      "colorName": "Heather Stone",
+      "colorCode": "64",
+      "hexColor": "#908976",
+      "productImage": "product/heather-stone.jpg",
+      "swatchImage": "swatches/heather-stone.jpg"
+    },
+    {
+      "colorName": "Heather Storm",
+      "colorCode": "68",
+      "hexColor": "#75787B",
+      "productImage": "product/heather-storm.jpg",
+      "swatchImage": "swatches/heather-storm.jpg"
+    },
+    {
+      "colorName": "Heather Sunset",
+      "colorCode": "77",
+      "hexColor": "#E6A089",
+      "productImage": "product/heather-sunset.jpg",
+      "swatchImage": "swatches/heather-sunset.jpg"
+    },
+    {
+      "colorName": "Heather Tan",
+      "colorCode": "69",
+      "hexColor": "#C6AA76",
+      "productImage": "product/heather-tan.jpg",
+      "swatchImage": "swatches/heather-tan.jpg"
+    },
+    {
+      "colorName": "Heather Team Purple",
+      "colorCode": "65",
+      "hexColor": "#7D55C7",
+      "productImage": "product/heather-team-purple.jpg",
+      "swatchImage": "swatches/heather-team-purple.jpg"
+    },
+    {
+      "colorName": "Heather True Royal",
+      "colorCode": "78",
+      "hexColor": "#0033A0",
+      "productImage": "product/heather-true-royal.jpg",
+      "swatchImage": "swatches/heather-true-royal.jpg"
+    },
+    {
+      "colorName": "Heather Yellow",
+      "colorCode": "40",
+      "hexColor": "#F6EB61",
+      "productImage": "product/heather-yellow.jpg",
+      "swatchImage": "swatches/heather-yellow.jpg"
+    },
+    {
+      "colorName": "Heather Yellow Gold",
+      "colorCode": "12",
+      "hexColor": "#FDD26E",
+      "productImage": "product/heather-yellow-gold.jpg",
+      "swatchImage": "swatches/heather-yellow-gold.jpg"
+    },
+    {
+      "colorName": "Neon Blue",
+      "colorCode": "47",
+      "hexColor": "#0085CA",
+      "productImage": "product/neon-blue.jpg",
+      "swatchImage": "swatches/neon-blue.jpg"
+    },
+    {
+      "colorName": "Neon Orange",
+      "colorCode": "49",
+      "hexColor": "#FF6720",
+      "productImage": "product/neon-orange.jpg",
+      "swatchImage": "swatches/neon-orange.jpg"
+    },
+    {
+      "colorName": "Neon Pink",
+      "colorCode": "60",
+      "hexColor": "#FF85BD",
+      "productImage": "product/neon-pink.jpg",
+      "swatchImage": "swatches/neon-pink.jpg"
+    },
+    {
+      "colorName": "Neon Yellow",
+      "colorCode": "61",
+      "hexColor": "#ECF166",
+      "productImage": "product/neon-yellow.jpg",
+      "swatchImage": "swatches/neon-yellow.jpg"
+    },
+    {
+      "colorName": "Solid Asphalt Blend",
+      "colorCode": "71",
+      "hexColor": "#54585A",
+      "productImage": "product/solid-asphalt-blend.jpg",
+      "swatchImage": "swatches/solid-asphalt-blend.jpg"
+    },
+    {
+      "colorName": "Solid Black Blend",
+      "colorCode": "50",
+      "hexColor": "#2D2926",
+      "productImage": "product/solid-black-blend.jpg",
+      "swatchImage": "swatches/solid-black-blend.jpg"
+    },
+    {
+      "colorName": "Solid Navy Blend",
+      "colorCode": "72",
+      "hexColor": "#3B4559",
+      "productImage": "product/solid-navy-blend.jpg",
+      "swatchImage": "swatches/solid-navy-blend.jpg"
+    },
+    {
+      "colorName": "Solid Red Blend",
+      "colorCode": "80",
+      "hexColor": "#BF0D3E",
+      "productImage": "product/solid-red-blend.jpg",
+      "swatchImage": "swatches/solid-red-blend.jpg"
+    },
+    {
+      "colorName": "Solid True Royal Blend",
+      "colorCode": "81",
+      "hexColor": "#385E9D",
+      "productImage": "product/solid-true-royal-blend.jpg",
+      "swatchImage": "swatches/solid-true-royal-blend.jpg"
+    },
+    {
+      "colorName": "Solid White Blend",
+      "colorCode": "00",
+      "hexColor": "#FFFFFF",
+      "productImage": "product/solid-white-blend.jpg",
+      "swatchImage": "swatches/solid-white-blend.jpg"
+    }
+  ]
+}
