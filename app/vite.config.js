@@ -81,6 +81,47 @@ function apiPlugin() {
           return
         }
 
+        // Handle /api/skus - colorName -> size -> SKU, not warehouse-filtered
+        if (req.url.startsWith('/api/skus')) {
+          const skuUrl = new URL(req.url, 'http://localhost')
+          const skuStyle = skuUrl.searchParams.get('style')
+          if (!skuStyle) {
+            res.statusCode = 400
+            res.setHeader('Content-Type', 'application/json')
+            res.end(JSON.stringify({ error: 'Missing style parameter' }))
+            return
+          }
+          try {
+            const auth = Buffer.from(`${SS_API_USERNAME}:${SS_API_PASSWORD}`).toString('base64')
+            const response = await fetch(
+              `https://api.ssactivewear.com/v2/products/?style=${encodeURIComponent(skuStyle)}&mediatype=json`,
+              { headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/json' } }
+            )
+            if (!response.ok) throw new Error(`SS API returned ${response.status}`)
+            const data = await response.json()
+            if (data.errors) {
+              res.statusCode = 404
+              res.setHeader('Content-Type', 'application/json')
+              res.end(JSON.stringify({ error: 'Product not found', details: data.errors }))
+              return
+            }
+            const skus = {}
+            data.forEach(item => {
+              if (!item.sku || !item.colorName || !item.sizeName) return
+              const key = item.colorName.toLowerCase().trim()
+              if (!skus[key]) skus[key] = {}
+              skus[key][item.sizeName] = item.sku
+            })
+            res.setHeader('Content-Type', 'application/json')
+            res.end(JSON.stringify({ style: skuStyle, skus }))
+          } catch (error) {
+            res.statusCode = 500
+            res.setHeader('Content-Type', 'application/json')
+            res.end(JSON.stringify({ error: 'Failed to fetch SKUs', message: error.message }))
+          }
+          return
+        }
+
         // Handle /api/inventory
         if (!req.url.startsWith('/api/inventory')) {
           return next()

@@ -3,7 +3,6 @@ import {
   getPendingOrders,
   getOrderBatches,
   getOrdersByBatch,
-  markOrdersCompleted,
   deleteOrder,
   getArchivedOrders,
   archiveOrders,
@@ -13,29 +12,10 @@ import {
 
 const ADMIN_PASSWORD = 'iconik2024'
 
-const SHIPPING_METHODS = [
-  { code: 1, name: 'Ground (S&S Chooses Carrier)' },
-  { code: 54, name: 'Cheapest Ground (USPS/UPS/FedEx)' },
-  { code: 14, name: 'FedEx Ground' },
-  { code: 40, name: 'UPS Ground' },
-  { code: 16, name: 'UPS 3 Day Select' },
-  { code: 3, name: 'UPS 2nd Day Air' },
-  { code: 48, name: 'FedEx 2nd Day Air' },
-  { code: 2, name: 'UPS Next Day Air' },
-  { code: 21, name: 'UPS Next Day Air Saver' },
-  { code: 26, name: 'FedEx Next Day Priority' },
-  { code: 27, name: 'FedEx Next Day Standard' },
-  { code: 6, name: 'Will Call / Pickup' },
-]
-
-const DEFAULT_ADDRESS = {
-  customer: 'Iconik',
-  attn: '',
-  address: '',
-  city: '',
-  state: 'IL',
-  zip: '',
-  residential: false
+// Orders store outerwear only as a type; map it to the S&S style for SKU lookup.
+const OUTERWEAR_STYLE = {
+  crewneck: 'Gildan 18000',
+  hoodie: 'Gildan 18500',
 }
 
 export default function AdminPanel() {
@@ -49,12 +29,12 @@ export default function AdminPanel() {
   const [batchOrders, setBatchOrders] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [submitting, setSubmitting] = useState(false)
 
-  // Shipping form state
-  const [shippingMethod, setShippingMethod] = useState(1)
-  const [shippingAddress, setShippingAddress] = useState(DEFAULT_ADDRESS)
-  const [testOrder, setTestOrder] = useState(true) // Default to test mode for safety
+  // Cart-list builder state
+  const [building, setBuilding] = useState(false)
+  const [cartText, setCartText] = useState('')
+  const [cartStatus, setCartStatus] = useState('')
+  const [cartUnresolved, setCartUnresolved] = useState([])
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -206,95 +186,90 @@ export default function AdminPanel() {
     }
   }
 
-  const aggregateLineItems = () => {
-    // Aggregate all items from pending orders into SKU quantities
-    const items = {}
+  // Turn all pending orders into real S&S SKUs + quantities for a Quick Order
+  // paste. Resolves SKUs live from /api/skus (keyed by color name + size) so we
+  // never rely on placeholder identifiers. Returns the paste text plus any items
+  // whose SKU couldn't be resolved, so nothing is silently dropped.
+  const buildCartList = async () => {
+    // Every distinct style referenced by the pending orders
+    const styleSet = new Set()
+    pendingOrders.forEach(order => {
+      for (let i = 1; i <= 3; i++) {
+        if (order[`tshirt_${i}_style`]) styleSet.add(order[`tshirt_${i}_style`])
+      }
+      const owStyle = OUTERWEAR_STYLE[order.outerwear_type]
+      if (owStyle) styleSet.add(owStyle)
+    })
+
+    // Fetch a colorName -> size -> SKU map for each style
+    const skuMaps = {}
+    await Promise.all([...styleSet].map(async (style) => {
+      try {
+        const r = await fetch(`/api/skus?style=${encodeURIComponent(style)}`)
+        skuMaps[style] = r.ok ? (await r.json()).skus : null
+      } catch {
+        skuMaps[style] = null
+      }
+    }))
+
+    const qtyBySku = {}
+    const unresolved = []
+    const addItem = (style, color, size) => {
+      const sku = skuMaps[style]?.[color?.toLowerCase().trim()]?.[size]
+      if (sku) {
+        qtyBySku[sku] = (qtyBySku[sku] || 0) + 1
+      } else {
+        unresolved.push(`${style || '?'} / ${color || '?'} / ${size || '?'}`)
+      }
+    }
 
     pendingOrders.forEach(order => {
-      // T-shirts
       for (let i = 1; i <= 3; i++) {
         const style = order[`tshirt_${i}_style`]
         const color = order[`tshirt_${i}_color`]
         const size = order[`tshirt_${i}_size`]
-        if (style && color && size) {
-          // Create a key for this item (we'll need to look up SKU later)
-          const key = `${style}|${color}|${size}`
-          items[key] = (items[key] || 0) + 1
-        }
+        if (style && color && size) addItem(style, color, size)
       }
-
-      // Outerwear
       if (order.outerwear_type && order.outerwear_color && order.outerwear_size) {
-        const key = `${order.outerwear_type}|${order.outerwear_color}|${order.outerwear_size}`
-        items[key] = (items[key] || 0) + 1
+        addItem(OUTERWEAR_STYLE[order.outerwear_type], order.outerwear_color, order.outerwear_size)
       }
     })
 
-    // Convert to line items format
-    // Note: For now, using style|color|size as identifier - would need SKU lookup in production
-    return Object.entries(items).map(([key, qty]) => ({
-      identifier: key, // This should be the actual SKU from SS Activewear
-      qty
-    }))
+    // S&S Quick Order accepts one "SKU<tab>qty" per line
+    const text = Object.entries(qtyBySku)
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([sku, qty]) => `${sku}\t${qty}`)
+      .join('\n')
+
+    return { text, unresolved, skuCount: Object.keys(qtyBySku).length }
   }
 
-  const handlePlaceOrder = async () => {
-    if (pendingOrders.length === 0) {
-      alert('No pending orders to submit')
-      return
-    }
-
-    if (!shippingAddress.address || !shippingAddress.city || !shippingAddress.zip) {
-      alert('Please fill in the shipping address')
-      return
-    }
-
-    const confirmMsg = testOrder
-      ? 'Submit as TEST order? (No actual order will be placed)'
-      : 'Submit REAL order to SS Activewear? This will place an actual order!'
-
-    if (!confirm(confirmMsg)) return
-
-    setSubmitting(true)
+  const handleBuildCart = async () => {
+    if (pendingOrders.length === 0) return
+    setBuilding(true)
     setError('')
-
+    setCartStatus('')
+    setCartUnresolved([])
     try {
-      const lineItems = aggregateLineItems()
+      const { text, unresolved, skuCount } = await buildCartList()
+      setCartText(text)
+      setCartUnresolved(unresolved)
 
-      const response = await fetch('/api/submit-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          lineItems,
-          shippingMethod,
-          shippingAddress,
-          testOrder,
-          poNumber: `ICONIK-${new Date().toISOString().split('T')[0]}`
-        })
-      })
-
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to submit order')
+      if (!text) {
+        setCartStatus('No SKUs could be resolved for these orders.')
+      } else {
+        try {
+          await navigator.clipboard.writeText(text)
+          setCartStatus(`Copied ${skuCount} line item${skuCount !== 1 ? 's' : ''} to the clipboard — paste into S&S Quick Order.`)
+        } catch {
+          setCartStatus(`Built ${skuCount} line item${skuCount !== 1 ? 's' : ''} — select the text below and copy it.`)
+        }
       }
-
-      // Mark orders as completed
-      const orderIds = pendingOrders.map(o => o.id)
-      const ssOrderId = result.order?.orderNumber || `SS-${Date.now()}`
-      await markOrdersCompleted(orderIds, ssOrderId)
-
-      alert(`Order submitted successfully!\nOrder #: ${ssOrderId}${testOrder ? ' (TEST)' : ''}`)
-
-      // Refresh the pending orders list
-      loadPendingOrders()
-
     } catch (err) {
-      console.error('Failed to place order:', err)
-      setError(err.message || 'Failed to place order')
-      alert('Failed to place order: ' + err.message)
+      console.error('Failed to build cart list:', err)
+      setError(err.message || 'Failed to build cart list')
     } finally {
-      setSubmitting(false)
+      setBuilding(false)
     }
   }
 
@@ -415,116 +390,60 @@ export default function AdminPanel() {
       <div className="max-w-6xl mx-auto px-4 py-6">
         {activeTab === 'pending' && (
           <>
-            {/* Shipping & Order Section */}
+            {/* Build Cart for S&S Quick Order */}
             {pendingOrders.length > 0 && (
               <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4">Place Order with SS Activewear</h2>
+                <h2 className="text-lg font-semibold text-gray-800 mb-1">Build Cart for S&S Quick Order</h2>
+                <p className="text-sm text-gray-600 mb-4">
+                  Turns every pending order into S&S SKUs and quantities. Copy the list, then paste it
+                  into <span className="font-medium">Quick Order</span> on ssactivewear.com to load your
+                  cart — review and check out there. No order is placed from this app.
+                </p>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* Shipping Address */}
-                  <div>
-                    <h3 className="font-medium text-gray-700 mb-3">Shipping Address</h3>
-                    <div className="space-y-3">
-                      <input
-                        type="text"
-                        placeholder="Company Name"
-                        value={shippingAddress.customer}
-                        onChange={(e) => setShippingAddress({...shippingAddress, customer: e.target.value})}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Attention"
-                        value={shippingAddress.attn}
-                        onChange={(e) => setShippingAddress({...shippingAddress, attn: e.target.value})}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Street Address *"
-                        value={shippingAddress.address}
-                        onChange={(e) => setShippingAddress({...shippingAddress, address: e.target.value})}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                        required
-                      />
-                      <div className="grid grid-cols-3 gap-2">
-                        <input
-                          type="text"
-                          placeholder="City *"
-                          value={shippingAddress.city}
-                          onChange={(e) => setShippingAddress({...shippingAddress, city: e.target.value})}
-                          className="col-span-1 px-3 py-2 border border-gray-300 rounded-lg"
-                          required
-                        />
-                        <input
-                          type="text"
-                          placeholder="State *"
-                          value={shippingAddress.state}
-                          onChange={(e) => setShippingAddress({...shippingAddress, state: e.target.value})}
-                          className="col-span-1 px-3 py-2 border border-gray-300 rounded-lg"
-                          required
-                        />
-                        <input
-                          type="text"
-                          placeholder="ZIP *"
-                          value={shippingAddress.zip}
-                          onChange={(e) => setShippingAddress({...shippingAddress, zip: e.target.value})}
-                          className="col-span-1 px-3 py-2 border border-gray-300 rounded-lg"
-                          required
-                        />
-                      </div>
-                    </div>
+                <button
+                  onClick={handleBuildCart}
+                  disabled={building}
+                  className={`py-3 px-5 rounded-lg font-semibold text-white transition-colors ${
+                    building ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+                  }`}
+                >
+                  {building ? 'Building…' : 'Build & Copy Cart List'}
+                </button>
+
+                {cartStatus && (
+                  <p className="mt-3 text-sm font-medium text-green-700">{cartStatus}</p>
+                )}
+
+                {cartUnresolved.length > 0 && (
+                  <div className="mt-3 text-sm text-red-600">
+                    <p className="font-medium">
+                      {cartUnresolved.length} item{cartUnresolved.length !== 1 ? 's' : ''} could not be
+                      matched to a SKU and {cartUnresolved.length !== 1 ? 'are' : 'is'} NOT in the list:
+                    </p>
+                    <ul className="list-disc list-inside mt-1">
+                      {cartUnresolved.map((u, i) => <li key={i}>{u}</li>)}
+                    </ul>
                   </div>
+                )}
 
-                  {/* Shipping Method */}
-                  <div>
-                    <h3 className="font-medium text-gray-700 mb-3">Shipping Method</h3>
-                    <select
-                      value={shippingMethod}
-                      onChange={(e) => setShippingMethod(Number(e.target.value))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-4"
-                    >
-                      {SHIPPING_METHODS.map(method => (
-                        <option key={method.code} value={method.code}>
-                          {method.name}
-                        </option>
-                      ))}
-                    </select>
-
-                    <div className="flex items-center gap-2 mb-4">
-                      <input
-                        type="checkbox"
-                        id="testOrder"
-                        checked={testOrder}
-                        onChange={(e) => setTestOrder(e.target.checked)}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor="testOrder" className="text-sm text-gray-600">
-                        Test Order (won't actually place order)
-                      </label>
-                    </div>
-
-                    <button
-                      onClick={handlePlaceOrder}
-                      disabled={submitting || pendingOrders.length === 0}
-                      className={`w-full py-3 rounded-lg font-semibold text-white transition-colors ${
-                        submitting
-                          ? 'bg-gray-400 cursor-not-allowed'
-                          : testOrder
-                            ? 'bg-yellow-500 hover:bg-yellow-600'
-                            : 'bg-green-600 hover:bg-green-700'
-                      }`}
-                    >
-                      {submitting ? 'Submitting...' : testOrder ? 'Submit Test Order' : 'Place Real Order'}
-                    </button>
-
-                    {!testOrder && (
-                      <p className="text-xs text-red-600 mt-2">
-                        Warning: This will place a real order with SS Activewear
-                      </p>
-                    )}
+                {cartText && (
+                  <div className="mt-4">
+                    <label className="block text-xs text-gray-500 mb-1">
+                      SKU list (tab-separated — paste into S&S Quick Order)
+                    </label>
+                    <textarea
+                      readOnly
+                      value={cartText}
+                      onFocus={(e) => e.target.select()}
+                      rows={Math.min(cartText.split('\n').length + 1, 14)}
+                      className="w-full font-mono text-sm px-3 py-2 border border-gray-300 rounded-lg bg-gray-50"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      After checking out on S&S, use <span className="font-medium">Archive All</span> to
+                      clear these from pending.
+                    </p>
                   </div>
-                </div>
+                )}
               </div>
             )}
 
