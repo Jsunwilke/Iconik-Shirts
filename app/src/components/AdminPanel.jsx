@@ -12,10 +12,17 @@ import {
 
 const ADMIN_PASSWORD = 'iconik2024'
 
-// Orders store outerwear only as a type; map it to the S&S style for SKU lookup.
+// Orders store outerwear only as a type; map it to the S&S style name.
 const OUTERWEAR_STYLE = {
   crewneck: 'Gildan 18000',
   hoodie: 'Gildan 18500',
+}
+
+// Canonical size order so the breakdown reads S,M,L,... not alphabetical.
+const SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL']
+const sizeRank = (s) => {
+  const i = SIZE_ORDER.indexOf(s)
+  return i === -1 ? 99 : i
 }
 
 export default function AdminPanel() {
@@ -34,7 +41,6 @@ export default function AdminPanel() {
   const [building, setBuilding] = useState(false)
   const [cartText, setCartText] = useState('')
   const [cartStatus, setCartStatus] = useState('')
-  const [cartUnresolved, setCartUnresolved] = useState([])
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -190,58 +196,46 @@ export default function AdminPanel() {
   // paste. Resolves SKUs live from /api/skus (keyed by color name + size) so we
   // never rely on placeholder identifiers. Returns the paste text plus any items
   // whose SKU couldn't be resolved, so nothing is silently dropped.
-  const buildCartList = async () => {
-    // Every distinct style referenced by the pending orders
-    const styleSet = new Set()
-    pendingOrders.forEach(order => {
-      for (let i = 1; i <= 3; i++) {
-        if (order[`tshirt_${i}_style`]) styleSet.add(order[`tshirt_${i}_style`])
-      }
-      const owStyle = OUTERWEAR_STYLE[order.outerwear_type]
-      if (owStyle) styleSet.add(owStyle)
-    })
-
-    // Fetch a colorName -> size -> SKU map for each style
-    const skuMaps = {}
-    await Promise.all([...styleSet].map(async (style) => {
-      try {
-        const r = await fetch(`/api/skus?style=${encodeURIComponent(style)}`)
-        skuMaps[style] = r.ok ? (await r.json()).skus : null
-      } catch {
-        skuMaps[style] = null
-      }
-    }))
-
-    const qtyBySku = {}
-    const unresolved = []
-    const addItem = (style, color, size) => {
-      const sku = skuMaps[style]?.[color?.toLowerCase().trim()]?.[size]
-      if (sku) {
-        qtyBySku[sku] = (qtyBySku[sku] || 0) + 1
-      } else {
-        unresolved.push(`${style || '?'} / ${color || '?'} / ${size || '?'}`)
-      }
+  // Group every pending-order item by style -> color -> size with quantities.
+  // S&S product pages let you enter quantities for a whole style's size grid at
+  // once, so this is the checklist you read off while filling each style's page.
+  const buildOrderBreakdown = () => {
+    // styleLabel -> color -> size -> qty
+    const styles = {}
+    let total = 0
+    const addItem = (styleLabel, color, size) => {
+      if (!styleLabel || !color || !size) return
+      styles[styleLabel] = styles[styleLabel] || {}
+      styles[styleLabel][color] = styles[styleLabel][color] || {}
+      styles[styleLabel][color][size] = (styles[styleLabel][color][size] || 0) + 1
+      total++
     }
 
     pendingOrders.forEach(order => {
       for (let i = 1; i <= 3; i++) {
-        const style = order[`tshirt_${i}_style`]
-        const color = order[`tshirt_${i}_color`]
-        const size = order[`tshirt_${i}_size`]
-        if (style && color && size) addItem(style, color, size)
+        addItem(order[`tshirt_${i}_style`], order[`tshirt_${i}_color`], order[`tshirt_${i}_size`])
       }
       if (order.outerwear_type && order.outerwear_color && order.outerwear_size) {
-        addItem(OUTERWEAR_STYLE[order.outerwear_type], order.outerwear_color, order.outerwear_size)
+        const style = OUTERWEAR_STYLE[order.outerwear_type]
+        const label = style ? `${style} (${order.outerwear_type})` : order.outerwear_type
+        addItem(label, order.outerwear_color, order.outerwear_size)
       }
     })
 
-    // S&S Quick Order accepts one "SKU<tab>qty" per line
-    const text = Object.entries(qtyBySku)
-      .sort((a, b) => a[0].localeCompare(b[0]))
-      .map(([sku, qty]) => `${sku}\t${qty}`)
-      .join('\n')
+    const blocks = Object.keys(styles).sort().map(styleLabel => {
+      const colors = styles[styleLabel]
+      let subtotal = 0
+      const lines = Object.keys(colors).sort().map(color => {
+        const sizes = Object.entries(colors[color])
+          .sort((a, b) => sizeRank(a[0]) - sizeRank(b[0]))
+          .map(([size, qty]) => { subtotal += qty; return `${size}×${qty}` })
+          .join('   ')
+        return `  ${color}:  ${sizes}`
+      })
+      return `${styleLabel}  (${subtotal} pcs)\n${lines.join('\n')}`
+    })
 
-    return { text, unresolved, skuCount: Object.keys(qtyBySku).length }
+    return { text: blocks.join('\n\n'), total, styleCount: blocks.length }
   }
 
   const handleBuildCart = async () => {
@@ -249,25 +243,22 @@ export default function AdminPanel() {
     setBuilding(true)
     setError('')
     setCartStatus('')
-    setCartUnresolved([])
     try {
-      const { text, unresolved, skuCount } = await buildCartList()
+      const { text, total, styleCount } = buildOrderBreakdown()
       setCartText(text)
-      setCartUnresolved(unresolved)
-
       if (!text) {
-        setCartStatus('No SKUs could be resolved for these orders.')
+        setCartStatus('No items to build.')
       } else {
         try {
           await navigator.clipboard.writeText(text)
-          setCartStatus(`Copied ${skuCount} line item${skuCount !== 1 ? 's' : ''} to the clipboard — paste into S&S Quick Order.`)
+          setCartStatus(`Copied — ${total} pieces across ${styleCount} style${styleCount !== 1 ? 's' : ''}.`)
         } catch {
-          setCartStatus(`Built ${skuCount} line item${skuCount !== 1 ? 's' : ''} — select the text below and copy it.`)
+          setCartStatus(`Built ${total} pieces across ${styleCount} style${styleCount !== 1 ? 's' : ''} — select the text below to copy.`)
         }
       }
     } catch (err) {
-      console.error('Failed to build cart list:', err)
-      setError(err.message || 'Failed to build cart list')
+      console.error('Failed to build breakdown:', err)
+      setError(err.message || 'Failed to build breakdown')
     } finally {
       setBuilding(false)
     }
@@ -390,14 +381,14 @@ export default function AdminPanel() {
       <div className="max-w-6xl mx-auto px-4 py-6">
         {activeTab === 'pending' && (
           <>
-            {/* Build Cart for S&S Quick Order */}
+            {/* Order breakdown for filling the S&S cart */}
             {pendingOrders.length > 0 && (
               <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-                <h2 className="text-lg font-semibold text-gray-800 mb-1">Build Cart for S&S Quick Order</h2>
+                <h2 className="text-lg font-semibold text-gray-800 mb-1">Shopping Breakdown for S&S</h2>
                 <p className="text-sm text-gray-600 mb-4">
-                  Turns every pending order into S&S SKUs and quantities. Copy the list, then paste it
-                  into <span className="font-medium">Quick Order</span> on ssactivewear.com to load your
-                  cart — review and check out there. No order is placed from this app.
+                  Totals every pending order by style, color, and size. On ssactivewear.com, open each
+                  style's product page and enter these quantities in the size grid, then add to cart —
+                  you can add anything else you need before checking out. No order is placed from this app.
                 </p>
 
                 <button
@@ -407,35 +398,23 @@ export default function AdminPanel() {
                     building ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
                   }`}
                 >
-                  {building ? 'Building…' : 'Build & Copy Cart List'}
+                  {building ? 'Building…' : 'Build Shopping Breakdown'}
                 </button>
 
                 {cartStatus && (
                   <p className="mt-3 text-sm font-medium text-green-700">{cartStatus}</p>
                 )}
 
-                {cartUnresolved.length > 0 && (
-                  <div className="mt-3 text-sm text-red-600">
-                    <p className="font-medium">
-                      {cartUnresolved.length} item{cartUnresolved.length !== 1 ? 's' : ''} could not be
-                      matched to a SKU and {cartUnresolved.length !== 1 ? 'are' : 'is'} NOT in the list:
-                    </p>
-                    <ul className="list-disc list-inside mt-1">
-                      {cartUnresolved.map((u, i) => <li key={i}>{u}</li>)}
-                    </ul>
-                  </div>
-                )}
-
                 {cartText && (
                   <div className="mt-4">
                     <label className="block text-xs text-gray-500 mb-1">
-                      SKU list (tab-separated — paste into S&S Quick Order)
+                      Quantities by style → color → size
                     </label>
                     <textarea
                       readOnly
                       value={cartText}
                       onFocus={(e) => e.target.select()}
-                      rows={Math.min(cartText.split('\n').length + 1, 14)}
+                      rows={Math.min(cartText.split('\n').length + 1, 24)}
                       className="w-full font-mono text-sm px-3 py-2 border border-gray-300 rounded-lg bg-gray-50"
                     />
                     <p className="text-xs text-gray-500 mt-1">
