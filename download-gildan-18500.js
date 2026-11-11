@@ -3,11 +3,11 @@ const https = require('https');
 const path = require('path');
 
 const BASE_URL = 'https://www.ssactivewear.com/';
-const PRODUCT_DIR = 'E:/Jason Desktop/Iconik Software/Web apps/Iconik-Shirts/images/hoodie/gildan-18500/product';
-const SWATCH_DIR = 'E:/Jason Desktop/Iconik Software/Web apps/Iconik-Shirts/images/hoodie/gildan-18500/swatches';
+const PRODUCT_DIR = path.join(__dirname, 'images/hoodie/gildan-18500/product');
+const SWATCH_DIR = path.join(__dirname, 'images/hoodie/gildan-18500/swatches');
 
 // Read the raw data
-const data = JSON.parse(fs.readFileSync('E:/Jason Desktop/Iconik Software/Web apps/Iconik-Shirts/gildan-18500-raw.json', 'utf8'));
+const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'gildan-18500-raw.json'), 'utf8'));
 
 console.log('Style:', data[0]?.styleName, '-', data[0]?.brandName);
 
@@ -125,7 +125,7 @@ async function downloadAll() {
   }
 
   // Save the organized color data
-  const outputPath = 'E:/Jason Desktop/Iconik Software/Web apps/Iconik-Shirts/data/gildan-18500.json';
+  const outputPath = path.join(__dirname, 'data/gildan-18500.json');
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, JSON.stringify({
     styleId: "gildan-18500",
